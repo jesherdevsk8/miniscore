@@ -160,6 +160,7 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.9)
+    prism (1.2.0)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -210,6 +211,8 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.2.1)
+    rbs (3.6.1)
+      logger
     rdoc (6.7.0)
       psych (>= 4.0.0)
     regexp_parser (2.9.2)
@@ -246,8 +249,16 @@ GEM
       rubocop-minitest
       rubocop-performance
       rubocop-rails
+    ruby-lsp (0.20.1)
+      language_server-protocol (~> 3.17.0)
+      prism (>= 1.2, < 2.0)
+      rbs (>= 3, < 4)
+      sorbet-runtime (>= 0.5.10782)
+    ruby-lsp-rails (0.3.21)
+      ruby-lsp (>= 0.20.0, < 0.21.0)
     ruby-progressbar (1.13.0)
     securerandom (0.3.1)
+    sorbet-runtime (0.5.11615)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -303,6 +314,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rails (~> 7.2.1)
   rubocop-rails-omakase
+  ruby-lsp-rails
   sprockets-rails
   stimulus-rails
   turbo-rails
