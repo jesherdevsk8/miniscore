@@ -2,16 +2,54 @@
 
 <% content_for :title, "Players" %>
 
-<h1>Players</h1>
-
-<div id="players">
-  <% @players.each do |player| %>
-    <%= render player %>
-    <p>
-      <%= player.name %>
-      <%= link_to "Show this player", player %>
-    </p>
-  <% end %>
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Lista de Jogadores</h5>
+        <div class="btn-group">
+          <%= link_to new_player_path, class: "btn btn-success" do %>
+            <i class="bi bi-person-plus"></i>
+          <% end %>
+          <%= button_tag "Novo jogador", class: "btn btn-outline-dark", disabled: true %>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Jogos</th>
+            <th>Aprov.</th>
+            <th>Gols</th>
+            <th>Vitórias</th>
+            <th>Empates</th>
+            <th>Derrotas</th>
+            <th>Média de gols</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @players.each do |player| %>
+            <tr>
+              <td><%= player.name %></td>
+              <td><%= player.total_matches %></td>
+              <td><%= player.percentage %>%</td>
+              <td><%= player.total_goals %></td>
+              <td><%= player.vitorias %></td>
+              <td><%= player.empates %></td>
+              <td><%= player.derrotas %></td>
+              <td><%= player.goals_per_matches %></td>
+              <td>
+                <%= link_to player, class: "btn btn-primary btn-sm" do %>
+                  <i class="bi bi-eye-fill"></i>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New player", new_player_path %>

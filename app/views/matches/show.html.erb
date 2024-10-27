@@ -1,10 +1,18 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @match %>
-
-<div>
-  <%= link_to "Edit this match", edit_match_path(@match) %> |
-  <%= link_to "Back to matches", matches_path %>
-
-  <%= button_to "Destroy this match", @match, method: :delete %>
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="mb-0">Detalhes da Partida</h5>
+    </div>
+    <div class="card-body">
+      <h6 class="card-title">Informações da Partida</h6>
+      <p><strong>Data:</strong> <%= @match.date.strftime("%d/%m/%Y") %></p>
+      <p><strong>Placar:</strong> <%= @match.score %></p>
+    </div>
+  </div>
+  <div class="mt-4 d-flex justify-content-start">
+    <%= link_to "Editar", edit_match_path(@match), class: "btn btn-primary me-2" %>
+    <%= button_to "Excluir", @match, method: :delete, data: { confirm: "Você tem certeza que deseja excluir esta partida?" }, class: "btn btn-danger" %>
+  </div>
 </div>

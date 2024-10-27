@@ -1,31 +1,59 @@
-<%= form_with(model: match, class: "form", local: true) do |form| %>
-  <% if match.errors.any? %>
-    <div class="alert alert-danger">
-      <h4 class="alert-heading"><%= pluralize(match.errors.count, "erro") %> impediram a partida de ser salva:</h4>
-      <ul>
-        <% match.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h5 class="mb-0">Editar Partida</h5>
     </div>
-  <% end %>
+    <div class="card-body">
+      <%= form_with(model: match) do |form| %>
+        <% if match.errors.any? %>
+          <div class="alert alert-danger">
+            <h4><%= pluralize(match.errors.count, "error") %> prohibited this match from being saved:</h4>
+            <ul>
+              <% match.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
 
-  <div class="mb-3">
-    <%= form.label :date, "Data da Partida", class: "form-label" %>
-    <%= form.date_field :date, class: "form-control", required: true %>
-  </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <%= form.label :date, class: "form-label" %>
+            <%= form.date_field :date, class: "form-control", required: true %>
+          </div>
+          <div class="col-md-6 mb-3">
+            <%= form.label :score, class: "form-label" %>
+            <%= form.text_field :score, class: "form-control", required: true %>
+          </div>
+        </div>
 
-  <div class="mb-3">
-    <%= form.label :match_result, "Resultado da Partida", class: "form-label" %>
-    <%= form.text_field :match_result, class: "form-control", required: true %>
-  </div>
+        <h4>Participações</h4>
+        <%= form.fields_for :participations do |participation_form| %>
+          <div class="mb-3">
+            <%= label_tag nil, participation_form.object.player.name, class: "form-label" %>
+            <%= participation_form.hidden_field :player_id, value: participation_form.object.player_id %>
+          </div>
 
-  <div class="mb-3">
-    <%= form.label :score, "Placar", class: "form-label" %>
-    <%= form.text_field :score, class: "form-control", required: true %>
-  </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <%= participation_form.label :goals, "Gols Marcados", class: "form-label" %>
+              <%= participation_form.number_field :goals, class: "form-control" %>
+            </div>
+            <div class="col-md-6 mb-3">
+              <%= participation_form.label :match_result, "Resultado da Participação", class: "form-label" %>
+              <%= participation_form.select :match_result, @match_results, {}, class: "form-control" %>
+            </div>
+          </div>
 
-  <div class="d-grid">
-    <%= form.submit "Salvar Partida", class: "btn btn-primary" %>
+          <div class="mb-3">
+            <%= participation_form.check_box :_destroy %>
+            <%= participation_form.label :_destroy, "Remover Participação", class: "form-check-label" %>
+          </div>
+          <hr>
+        <% end %>
+
+        <%= form.submit "Salvar Partida", class: "btn btn-primary" %>
+      <% end %>
+    </div>
   </div>
-<% end %>
+</div>

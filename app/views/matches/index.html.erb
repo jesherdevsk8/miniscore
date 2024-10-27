@@ -2,15 +2,42 @@
 
 <% content_for :title, "Matches" %>
 
-<h1>Matches</h1>
-
-<div id="matches">
-  <% @matches.each do |match| %>
-    <%= render match %>
-    <p>
-      <%= link_to "Show this match", match %>
-    </p>
-  <% end %>
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Lista de Partidas</h5>
+        <div class="btn-group">
+          <%= link_to new_match_path, class: "btn btn-success" do %>
+            <i class="bi bi-person-plus"></i>
+          <% end %>
+          <%= button_tag "Novo jogo", class: "btn btn-outline-dark", disabled: true %>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Placar</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @matches.each do |match| %>
+            <tr>
+              <td><%= match.date.strftime("%d/%m/%Y") %></td>
+              <td><%= match.score %></td>
+              <td>
+                <%= link_to match, class: "btn btn-primary btn-sm" do %>
+                  <i class="bi bi-eye-fill"></i>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New match", new_match_path %>

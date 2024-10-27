@@ -1,7 +1,8 @@
 class Match < ApplicationRecord
-  has_many :participations
+  has_many :participations, dependent: :destroy
   has_many :players, through: :participations
 
-  validates :date, presence: true
-  validates :match_result, presence: true, inclusion: { in: %w[vitoria empate derrota] }
+  accepts_nested_attributes_for :participations, allow_destroy: true
+
+  validates :date, :score, presence: true
 end

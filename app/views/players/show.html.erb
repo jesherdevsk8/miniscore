@@ -2,20 +2,26 @@
 
 <%= render @player %>
 
-<div>
-<h1><%= @player.name %> - Camisa <%= @player.number %></h1>
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h1 class="mb-0"><%= @player.name %> - Camisa <%= @player.number %></h1>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Estatísticas do Jogador</h5>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Total de Partidas: <strong><%= @player.total_matches %></strong></li>
+        <li class="list-group-item">Total de Gols: <strong><%= @player.total_goals %></strong></li>
+        <li class="list-group-item">Vitórias: <strong><%= @player.vitorias %></strong></li>
+        <li class="list-group-item">Empates: <strong><%= @player.empates %></strong></li>
+        <li class="list-group-item">Derrotas: <strong><%= @player.derrotas %></strong></li>
+        <li class="list-group-item">Média de Gols por Partida: <strong><%= @player.goals_per_matches %></strong></li>
+      </ul>
+    </div>
+  </div>
 
-<p>Total de Partidas: <%= @player.all_participations %></p>
-<p>Total de Gols: <%= @player.total_goals %></p>
-<p>Vitórias: <%= @player.vitorias %></p>
-<p>Empates: <%= @player.empates %></p>
-<p>Derrotas: <%= @player.derrotas %></p>
-<p>Média de Gols por Partida: <%= @player.goals_per_matches %></p>
-</div>
-
-<div>
-  <%= link_to "Edit this player", edit_player_path(@player) %> |
-  <%= link_to "Back to players", players_path %>
-
-  <%= button_to "Destroy this player", @player, method: :delete %>
+  <div class="mt-4 d-flex justify-content-start">
+    <%= link_to "Editar", edit_player_path(@player), class: "btn btn-primary me-2" %>
+    <%= button_to "Excluir", @player, method: :delete, data: { confirm: "Você tem certeza que deseja excluir este jogador?" }, class: "btn btn-danger" %>
+  </div>
 </div>

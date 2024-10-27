@@ -11,25 +11,30 @@ class Player < ApplicationRecord
     participations.sum(:goals)
   end
 
-  def all_participations
-    participations.count
+  def total_matches
+    @total_matches ||= participations.size
   end
 
   def vitorias
-    participations.joins(:match).where(matches: { match_result: 'vitoria' }).count
+    participations.where(match_result: 'vitoria').size
   end
 
   def empates
-    participations.joins(:match).where(matches: { match_result: 'empate' }).count
+    participations.where(match_result: 'empate').size
   end
 
   def derrotas
-    participations.joins(:match).where(matches: { match_result: 'derrota' }).count
+    participations.where(match_result: 'derrota').size
   end
 
   def goals_per_matches
-    return 0 if all_participations.zero?
-    total_goals.to_f / all_participations
+    return 0 if total_matches.zero?
+    (total_goals.to_f / total_matches)&.round(2)
+  end
+
+  def percentage
+    return 0 if total_matches.zero?
+    ((vitorias * 3 + empates).to_f / (total_matches * 3) * 100).round
   end
 
   # Opcional: Atualiza o slug se o nome mudar

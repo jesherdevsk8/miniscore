@@ -17,7 +17,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_25_213259) do
 
   create_table "matches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.date "date", null: false
-    t.string "match_result", null: false
     t.string "score", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -26,6 +25,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_25_213259) do
   create_table "participations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "player_id", null: false
     t.uuid "match_id", null: false
+    t.string "match_result", null: false
     t.integer "goals", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
