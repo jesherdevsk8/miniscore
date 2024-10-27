@@ -1,0 +1,31 @@
+<%= form_with(model: match, class: "form", local: true) do |form| %>
+  <% if match.errors.any? %>
+    <div class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(match.errors.count, "erro") %> impediram a partida de ser salva:</h4>
+      <ul>
+        <% match.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :date, "Data da Partida", class: "form-label" %>
+    <%= form.date_field :date, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :match_result, "Resultado da Partida", class: "form-label" %>
+    <%= form.text_field :match_result, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :score, "Placar", class: "form-label" %>
+    <%= form.text_field :score, class: "form-control", required: true %>
+  </div>
+
+  <div class="d-grid">
+    <%= form.submit "Salvar Partida", class: "btn btn-primary" %>
+  </div>
+<% end %>
