@@ -7,6 +7,11 @@ inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 # Layout/SpaceInsideArrayLiteralBrackets:
 #   Enabled: false
 
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.3.4
+  SuggestExtensions: false
+
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: single_quotes
