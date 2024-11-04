@@ -23,6 +23,9 @@ Style/StringLiteralsInInterpolation:
 Style/Documentation:
   Enabled: false
 
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
 Metrics/MethodLength:
   Max: 20
   Exclude:

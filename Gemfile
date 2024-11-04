@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '3.3.4'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.2.1'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
@@ -39,6 +41,7 @@ gem 'bootsnap', require: false
 gem 'devise', '~> 4.9'
 gem 'dotenv', '~> 2.8'
 gem 'friendly_id', '~> 5.5'
+gem 'pagy', '~> 9.1'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
