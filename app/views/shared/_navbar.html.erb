@@ -1,18 +1,44 @@
-<div class="d-flex">
-<nav class="flex-column bg-light vh-100 p-3" style="width: 250px;">
-  <a href="<%= root_path %>" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-    <span class="fs-4">Mini Score</span>
-  </a>
-  <hr>
-  <ul class="nav nav-pills flex-column mb-auto">
-    <li class="nav-item">
-      <a href="<%= root_path %>" class="nav-link text-dark">Início</a>
-    </li>
-    <li class="nav-item">
-      <a href="<%= players_path %>" class="nav-link text-dark">Jogadores</a>
-    </li>
-    <li class="nav-item">
-      <a href="<%= matches_path %>" class="nav-link text-dark">Partidas</a>
-    </li>
-  </ul>
+<nav class="navbar bg-body-tertiary fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="<%= root_path %>">Mini Score</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+
+     <div class="offcanvas-body">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="<%= root_path %>">
+            <i class="bi bi-person-fill"></i> Perfil
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<%= root_path %>" class="nav-link text-dark">
+            <i class="bi bi-house-fill"></i> Início
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<%= players_path %>" class="nav-link text-dark">
+            <i class="bi bi-people-fill"></i> Jogadores
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="<%= matches_path %>" class="nav-link text-dark">
+            <i class="bi bi-balloon-fill"></i> Partidas
+          </a>
+        </li>
+        <li class="nav-item">
+          <%= link_to root_path, method: :delete, class: 'nav-link' do %>
+            <i class="bi bi-box-arrow-right"></i> Sair
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>
