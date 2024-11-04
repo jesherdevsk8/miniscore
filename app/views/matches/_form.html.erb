@@ -1,25 +1,19 @@
 <div class="container mt-4">
   <div class="card">
     <div class="card-header">
-      <h5 class="mb-0">Editar Partida</h5>
+      <h4 class="mb-0">Editar Partida</h4>
     </div>
     <div class="card-body">
       <%= form_with(model: match) do |form| %>
-        <% if match.errors.any? %>
-          <div class="alert alert-danger">
-            <h4><%= pluralize(match.errors.count, "error") %> prohibited this match from being saved:</h4>
-            <ul>
-              <% match.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-
         <div class="row">
           <div class="col-md-6 mb-3">
-            <%= form.label :date, class: "form-label" %>
-            <%= form.date_field :date, class: "form-control", required: true %>
+            <% if form.object.persisted? %>
+              <%= form.label :date, class: "form-label" %>
+              <%= form.date_field :date, class: "form-control", disabled: true %>
+            <% else %>
+              <%= form.label :date, class: "form-label" %>
+              <%= form.date_field :date, class: "form-control", required: true %>
+            <% end %>
           </div>
           <div class="col-md-6 mb-3">
             <%= form.label :score, class: "form-label" %>
@@ -27,32 +21,45 @@
           </div>
         </div>
 
-        <h4>Participações</h4>
-        <%= form.fields_for :participations do |participation_form| %>
-          <div class="mb-3">
-            <%= label_tag nil, participation_form.object.player.name, class: "form-label" %>
-            <%= participation_form.hidden_field :player_id, value: participation_form.object.player_id %>
-          </div>
+        <div class="card-body">
+          <%= form.fields_for :participations do |form| %>
+            <div class="card">
+              <div class="card-header">
+                <%= form.hidden_field :player_id, value: form.object.player_id %>
+                <h5 class="form-label"><%= form.object.player.name %>
+              </div>
+              <div class="card-body">
+                <div class="me-1 d-flex align-items-center">
+                  <div class="me-3">
+                    <% @match_results.each_with_index do |result, index| %>
+                      <div class="form-check form-check-inline">
+                        <%= form.radio_button :match_result, result.last, checked: form.object.persisted? ? (form.object.match_result == result.last) : index == 1, class: "form-check-input" %>
+                        <%= form.label :match_result, result.first, class: "form-check-label" %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <div class="me-1 d-flex align-items-center">
+                    <%= form.label :goals, "Gols:", class: "form-check-label me-2" %>
+                    <%= form.number_field :goals, class: "form-control form-control-sm w-auto", min: 0, step: 1 %>
+                  </div>
 
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <%= participation_form.label :goals, "Gols Marcados", class: "form-label" %>
-              <%= participation_form.number_field :goals, class: "form-control" %>
+                  <div class="me-1 d-flex align-items-center">
+                    <% if form.object.persisted? %>
+                      <%= form.check_box :_destroy, { class: "form-check-input me-1", checked: true, disabled: true } %>
+                      <%= form.label :_destroy, "Participou ?", class: "form-check-label me-2" %>
+                    <% else %>
+                      <%= form.hidden_field :_destroy, value: '1' %>
+                      <%= form.check_box :_destroy, { class: "form-check-input me-1" }, '0', nil %>
+                      <%= form.label :_destroy, "Participou ?", class: "form-check-label me-2" %>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-md-6 mb-3">
-              <%= participation_form.label :match_result, "Resultado da Participação", class: "form-label" %>
-              <%= participation_form.select :match_result, @match_results, {}, class: "form-control" %>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <%= participation_form.check_box :_destroy %>
-            <%= participation_form.label :_destroy, "Remover Participação", class: "form-check-label" %>
-          </div>
-          <hr>
-        <% end %>
-
-        <%= form.submit "Salvar Partida", class: "btn btn-primary" %>
+            <hr>
+          <% end %>
+          <%= form.submit "Salvar Partida", class: "btn btn-primary" %>
+        </div>
       <% end %>
     </div>
   </div>

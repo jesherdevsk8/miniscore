@@ -1,31 +1,39 @@
-<%= form_with(model: player, class: "form", local: true) do |form| %>
-  <% if player.errors.any? %>
-    <div class="alert alert-danger">
-      <h4 class="alert-heading"><%= pluralize(player.errors.count, "erro") %> impediram o jogador de ser salvo:</h4>
-      <ul>
-        <% player.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="mb-0"><%= player.new_record? ? "Adicionar Jogador" : "Editar Jogador" %></h4>
     </div>
-  <% end %>
+    <div class="card-body">
+      <%= form_with(model: player, class: "form", local: true) do |form| %>
+        <% if player.errors.any? %>
+          <div class="alert alert-danger">
+            <h4 class="alert-heading"><%= pluralize(player.errors.count, "erro") %> impediram o jogador de ser salvo:</h4>
+            <ul>
+              <% player.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
 
-  <div class="mb-3">
-    <%= form.label :name, "Nome", class: "form-label" %>
-    <%= form.text_field :name, class: "form-control", required: true %>
-  </div>
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <%= form.label :name, "Nome", class: "form-label" %>
+            <%= form.text_field :name, class: "form-control", required: true %>
+          </div>
+          <div class="col-md-6">
+            <%= form.label :number, "Número da Camisa", class: "form-label" %>
+            <%= form.number_field :number, class: "form-control", required: true, min: 0, step: 1 %>
+          </div>
+        </div>
 
-  <div class="mb-3">
-    <%= form.label :number, "Número da Camisa", class: "form-label" %>
-    <%= form.number_field :number, class: "form-control", required: true %>
-  </div>
+        <div class="mb-3">
+          <%= form.label :nickname, "Apelido", class: "form-label" %>
+          <%= form.text_field :nickname, class: "form-control" %>
+        </div>
 
-  <div class="mb-3">
-    <%= form.label :nickname, "Apelido", class: "form-label" %>
-    <%= form.text_field :nickname, class: "form-control" %>
+        <%= form.submit "Salvar Jogador", class: "btn btn-primary btn-sm" %>
+      <% end %>
+    </div>
   </div>
-
-  <div class="d-grid">
-    <%= form.submit "Salvar Jogador", class: "btn btn-primary" %>
-  </div>
-<% end %>
+</div>
