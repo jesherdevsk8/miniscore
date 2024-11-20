@@ -1,0 +1,14 @@
+<% content_for :title, "Editing participation" %>
+
+
+<div class="container mt-4">
+  <%= flash_message(@participation) %>
+
+  <div class="card shadow-sm">
+    <div class="card-header">
+      <h4 class="mb-0">Adicionar Participação</h4>
+    </div>
+    
+    <%= render "form", participation: @participation %>
+  </div>
+</div>

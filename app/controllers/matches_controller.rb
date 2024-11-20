@@ -78,8 +78,7 @@ class MatchesController < ApplicationController
   private
 
   def match_results
-    @match_results ||= Participation.match_results.except('_prefix')
-                                    .invert.map { |k, v| [ k.humanize, v ] }
+    @match_results ||= Participation.results
   end
 
   # Use callbacks to share common setup or constraints between actions.

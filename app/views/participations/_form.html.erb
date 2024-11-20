@@ -1,0 +1,66 @@
+<div class="card-body">
+  <%= form_with(model: participation, local: true) do |form| %>
+    <div class="row">
+      <div class="col-md-6">
+        <fieldset class="mb-4">
+          <legend class="h5">Dados do Jogador e da Partida</legend>
+          <div class="row">
+            <div class="col-md-4 col-sm-12 mt-3">
+              <%= form.label :player_id, "Jogador", class: "form-label" %>
+              <% if form.object.player.present? %>
+                  <%= form.text_field :player_id, value: form.object.player.name, 
+                                    class: "form-control form-control-lg px-2 text-success", disabled: true %>
+                <%= form.hidden_field :player_id, value: form.object.player_id %>
+              <% else %>
+                <%= form.select :player_id, @players_select,
+                                prompt: "Selecione",
+                                class: "form-select form-select-lg px-2" %>
+              <% end %>
+            </div>
+
+            <div class="col-md-4 col-sm-12 mt-3">
+              <%= form.label :match_id, "Partida", class: "form-label" %>
+              <% unless form.object.new_record? %>
+                <%= form.text_field :match_id, value: form.object.match.date.strftime("%d/%m/%Y"), 
+                                    class: "form-control form-control-lg px-2 text-success", disabled: true %>
+                <%= form.hidden_field :match_id, value: form.object.match_id %>
+              <% else %>
+                <%= form.select :match_id, @matches_select,
+                                prompt: "Selecione",
+                                class: "form-select form-select-lg px-2" %>
+              <% end %>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="col-md-6">
+        <fieldset class="mb-4">
+          <legend class="h5">Participações do Atleta</legend>
+          <div class="row">
+            <div class="col-md-6 col-sm-12 mt-3">
+              <%= form.label :goals, "Gols", class: "form-label" %>
+              <%= form.number_field :goals, class: "form-control px-2", min: 0, step: 1 %>
+            </div>
+
+            <div class="col-md-12 col-sm-12 mt-3">
+              <%= form.label :match_result, "Resultado do Jogo", class: "form-label" %>
+              <div class="d-flex flex-wrap">
+                <% @match_results.each_with_index do |result, index| %>
+                  <div class="form-check form-check-inline">
+                    <%= form.radio_button :match_result, result.last,
+                                          checked: form.object.persisted? ? (form.object.match_result == result.last) : index == 1,
+                                          class: "form-check-input" %>
+                    <%= form.label :match_result, result.first, class: "form-check-label" %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </div>
+
+    <%= form.submit "Salvar", class: "btn btn-primary" %>
+  <% end %>
+</div>

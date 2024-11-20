@@ -1,0 +1,37 @@
+<% content_for :title, "Participations" %>
+
+<div class="container mt-4">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Data da Partida</th>
+          <th>Nome do Jogador</th>
+          <th>Gols</th>
+          <th>Açoes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @participations.each do |participation| %>
+          <tr>
+            <td><%= participation.match.date %></td>
+            <td><%= participation.player.name %></td>
+            <td><%= participation.goals %></td>
+            <td>
+              <div class="d-flex">
+                <%= link_to edit_participation_path(participation), class: "btn btn-primary btn-sm me-2" do %>
+                  <i class="bi bi-pencil-fill"></i>
+                <% end %>
+                <%= button_to participation_path(participation), method: :delete, class: "btn btn-danger btn-sm" do %>
+                  <i class="bi bi-trash3-fill"></i>
+                <% end %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%= link_to "Nova Participação", new_participation_path, class: "btn btn-success mt-3" %>

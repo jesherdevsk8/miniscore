@@ -7,4 +7,8 @@ class Participation < ApplicationRecord
 
   validates :goals, numericality: { greater_than_or_equal_to: 0 }
   validates :match_result, presence: true
+
+  def self.results
+    match_results.except('_prefix').invert.map { |k, v| [ k.humanize, v ] }
+  end
 end
