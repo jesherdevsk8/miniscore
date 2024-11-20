@@ -42,8 +42,11 @@
               <td><%= player.derrotas %></td>
               <td><%= player.goals_per_matches %></td>
               <td>
-                <%= link_to player, class: "btn btn-primary btn-sm" do %>
+                <%= link_to player, class: "btn btn-secondary btn-sm" do %>
                   <i class="bi bi-eye-fill"></i>
+                <% end %>
+                <%= link_to edit_player_path(player), class: "btn btn-primary btn-sm" do %>
+                  <i class="bi bi-pencil-square"></i>
                 <% end %>
               </td>
             </tr>
