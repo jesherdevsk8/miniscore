@@ -1,21 +1,23 @@
 <div class="container mt-4">
+  <%= flash_message(@participation) %>
   <div class="card">
     <div class="card-header">
-      <h4 class="mb-0"><%= player.new_record? ? "Adicionar Jogador" : "Editar Jogador" %></h4>
+      <div class="d-flex justify-content-between align-items-center">
+        <% if player.new_record? %>
+          <h4 class="mb-0">Adicionar Jogador</h4>
+        <% else %>
+          <h4 class="mb-0">Editar Jogador</h4>
+          <div class="btn-group">
+            <%= link_to new_participation_path, class: "btn btn-success" do %>
+              <i class="bi bi-person-plus"></i>
+            <% end %>
+            <%= button_tag "Cadastrar participação", class: "btn btn-outline-dark", disabled: true %>
+          </div>
+        <% end %>
+      </div>
     </div>
     <div class="card-body">
       <%= form_with(model: player, class: "form", local: true) do |form| %>
-        <% if player.errors.any? %>
-          <div class="alert alert-danger">
-            <h4 class="alert-heading"><%= pluralize(player.errors.count, "erro") %> impediram o jogador de ser salvo:</h4>
-            <ul>
-              <% player.errors.each do |error| %>
-                <li><%= error.full_message %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-
         <div class="row mb-3">
           <div class="col-md-6">
             <%= form.label :name, "Nome", class: "form-label" %>
