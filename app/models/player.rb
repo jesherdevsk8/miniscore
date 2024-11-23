@@ -13,9 +13,15 @@ class Player < ApplicationRecord
     participations.sum(:goals)
   end
 
-  def self.top_scorer
-    Player.all.map { |player| [ player.name, player.participations.sum(:goals) ] }
-              .max_by { |_, goals| goals }
+  def self.top_scorers(max_by: false, sort_by: true)
+    players = Player.all.map do |player|
+      [ player.name, player.participations.sum(:goals) ]
+    end
+
+    players = players.sort_by { |_, goals| -goals } if sort_by
+    players = players.max_by { |_, goals| goals } if max_by
+
+    players
   end
 
   def total_matches
@@ -42,6 +48,10 @@ class Player < ApplicationRecord
   def percentage
     return 0 if total_matches.zero?
     ((vitorias * 3 + empates).to_f / (total_matches * 3) * 100).round
+  end
+
+  def last_five_participations
+    participations.map { |part| part.match_result }.last(5)
   end
 
   # Opcional: Atualiza o slug se o nome mudar
