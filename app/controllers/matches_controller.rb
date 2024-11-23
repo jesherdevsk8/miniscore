@@ -27,15 +27,6 @@ class MatchesController < ApplicationController
   def create
     @match = Match.new(match_params)
 
-    if selected_players.size < 12
-      respond_to do |format|
-        flash[:error] = 'Não é permitido criar uma partida com menos de 12 jogadores.'
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: { error: 'Não é permitido criar uma partida com menos de 12 jogadores.' }, status: :unprocessable_entity }
-      end
-      return
-    end
-
     respond_to do |format|
       if @match.save
         flash[:notice] = 'Partida criada com sucesso!'
@@ -84,16 +75,6 @@ class MatchesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_match
     @match = Match.find(params[:id])
-  end
-
-  def selected_players
-    permitted_params = match_params.to_h[:participations_attributes]&.with_indifferent_access
-    return [] if permitted_params.blank?
-
-    filtered_players ||= permitted_params.select { |_, attributes| attributes['_destroy'] == '0' }
-    player_ids = filtered_players.map { |player| player.last[:player_id] }
-
-    @selected_players ||= Player.where(id: player_ids)
   end
 
   # Only allow a list of trusted parameters through.

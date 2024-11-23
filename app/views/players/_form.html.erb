@@ -4,14 +4,14 @@
     <div class="card-header">
       <div class="d-flex justify-content-between align-items-center">
         <% if player.new_record? %>
-          <h4 class="mb-0">Adicionar Jogador</h4>
+          <h5 class="mb-0">Adicionar Jogador</h5>
         <% else %>
-          <h4 class="mb-0">Editar Jogador</h4>
+          <h5 class="mb-0">Editar Jogador</h5>
           <div class="btn-group">
-            <%= link_to new_participation_path, class: "btn btn-success" do %>
+            <%= link_to new_participation_path(player_id: @player.id), class: "btn btn-success btn-sm" do %>
               <i class="bi bi-person-plus"></i>
             <% end %>
-            <%= button_tag "Cadastrar participação", class: "btn btn-outline-dark", disabled: true %>
+            <%= button_tag "Cadastrar participação", class: "btn btn-outline-dark btn-sm", disabled: true %>
           </div>
         <% end %>
       </div>
@@ -21,17 +21,18 @@
         <div class="row mb-3">
           <div class="col-md-6">
             <%= form.label :name, "Nome", class: "form-label" %>
-            <%= form.text_field :name, class: "form-control", required: true %>
+            <%= form.text_field :name, class: "form-control form-control-sm px-2", required: true %>
           </div>
+          
           <div class="col-md-6">
             <%= form.label :number, "Número da Camisa", class: "form-label" %>
-            <%= form.number_field :number, class: "form-control", required: true, min: 0, step: 1 %>
+            <%= form.number_field :number, class: "form-control form-control-sm px-2", required: true, min: 0, step: 1 %>
           </div>
-        </div>
 
-        <div class="mb-3">
-          <%= form.label :nickname, "Apelido", class: "form-label" %>
-          <%= form.text_field :nickname, class: "form-control" %>
+          <div class="col-md-6">
+            <%= form.label :nickname, "Apelido", class: "form-label" %>
+            <%= form.text_field :nickname, class: "form-control form-control-sm px-2" %>
+          </div>
         </div>
 
         <%= form.submit "Salvar Jogador", class: "btn btn-primary btn-sm" %>

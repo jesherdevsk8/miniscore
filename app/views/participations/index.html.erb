@@ -1,37 +1,55 @@
 <% content_for :title, "Participations" %>
 
 <div class="container mt-4">
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Data da Partida</th>
-          <th>Nome do Jogador</th>
-          <th>Gols</th>
-          <th>Açoes</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @participations.each do |participation| %>
-          <tr>
-            <td><%= participation.match.date %></td>
-            <td><%= participation.player.name %></td>
-            <td><%= participation.goals %></td>
-            <td>
-              <div class="d-flex">
-                <%= link_to edit_participation_path(participation), class: "btn btn-primary btn-sm me-2" do %>
-                  <i class="bi bi-pencil-fill"></i>
-                <% end %>
-                <%= button_to participation_path(participation), method: :delete, class: "btn btn-danger btn-sm" do %>
-                  <i class="bi bi-trash3-fill"></i>
-                <% end %>
-              </div>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="card">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Participações</h5>
+        <div class="btn-group">
+          <%= link_to new_participation_path, class: "btn btn-success btn-sm" do %>
+            <i class="bi bi-calendar-plus"></i>
+          <% end %>
+          <%= button_tag "Nova Participação", class: "btn btn-outline-dark btn-sm", disabled: true %>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Data da Partida</th>
+              <th>Nome do Jogador</th>
+              <th>Gols</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @participations.each do |participation| %>
+              <tr>
+                <td><%= participation.match.date.strftime('%d/%m/%Y') %></td>
+                <td><%= participation.player.name %></td>
+                <td><%= participation.goals %></td>
+                <td>
+                  <div class="d-flex">
+                    <%= link_to edit_participation_path(participation), class: "btn btn-primary btn-sm me-2" do %>
+                      <i class="bi bi-pencil-fill"></i>
+                    <% end %>
+                    <%= button_to participation_path(participation), method: :delete, class: "btn btn-danger btn-sm" do %>
+                      <i class="bi bi-trash3-fill"></i>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <!-- Paginação -->
+        <div class="d-flex justify-content-center mt-4">
+          <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-<%= link_to "Nova Participação", new_participation_path, class: "btn btn-success mt-3" %>

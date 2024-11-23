@@ -4,48 +4,16 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row gy-4"> <!-- gy-4 adiciona espaçamento vertical entre os cartões -->
   <div class="col-lg-3 col-md-6">
-    <div class="card border-primary">
-      <div class="card-header">
+    <div class="card border-primary shadow-sm">
+      <div class="card-header bg-primary text-white">
         <div class="d-flex align-items-center">
           <div class="flex-shrink-0">
             <i class="bi bi-person-fill fa-5x"></i>
           </div>
           <div class="flex-grow-1 text-end">
-            <div class="huge"><%= @total_players || 7656 %></div>
-            <div>Total de jogadores no sistema!</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="col-lg-3 col-md-6">
-    <div class="card border-success">
-      <div class="card-header">
-        <div class="d-flex align-items-center">
-          <div class="flex-shrink-0">
-            <i class="bi bi-question-circle fa-5x"></i>
-          </div>
-          <div class="flex-grow-1 text-end">
-            <div class="huge"><%= @total_goals %></div>
-            <div>Total de gols!</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-3 col-md-6">
-    <div class="card border-warning">
-      <div class="card-header">
-        <div class="d-flex align-items-center">
-          <div class="flex-shrink-0">
-            <i class="bi bi-person-lines-fill fa-5x"></i>
-          </div>
-          <div class="flex-grow-1 text-end">
-            <div class="huge"><%= @total_players %></div>
+            <div class="h2"><%= @total_players %></div>
             <div>Total de jogadores!</div>
           </div>
         </div>
@@ -54,14 +22,47 @@
   </div>
 
   <div class="col-lg-3 col-md-6">
-    <div class="card border-info">
-      <div class="card-header">
+    <div class="card border-success shadow-sm">
+      <div class="card-header bg-success text-white">
+        <div class="d-flex align-items-center">
+          <div class="flex-shrink-0">
+            <i class="bi bi-question-circle fa-5x"></i>
+          </div>
+          <div class="flex-grow-1 text-end">
+            <div class="h2"><%= @total_goals %></div>
+            <div>Total de gols!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6">
+    <div class="card border-warning shadow-sm">
+      <div class="card-header bg-warning text-dark">
+        <div class="d-flex align-items-center">
+          <div class="flex-shrink-0">
+            <i class="bi bi-person-lines-fill fa-5x"></i>
+          </div>
+          <div class="flex-grow-1 text-end">
+            <div class="h5"><strong><%= @top_scorer.first %></strong></div>
+            <div class="text-muted">Total de gols: <strong><%= @top_scorer.last %></strong></div>
+            <div class="text-success fw-bold">Maior Artilheiro!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6">
+    <div class="card border-info shadow-sm">
+      <div class="card-header bg-info text-white">
         <div class="d-flex align-items-center">
           <div class="flex-shrink-0">
             <i class="bi bi-person-raised-hand fa-5x"></i>
           </div>
           <div class="flex-grow-1 text-end">
-            <div class="huge"><%= @total_matches %></div>
+            <div class="h2"><%= @total_matches %></div>
             <div>Total de partidas!</div>
           </div>
         </div>

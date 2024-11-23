@@ -7,8 +7,8 @@ class ParticipationsController < ApplicationController
 
   # GET /participations or /participations.json
   def index
-    @participations = Participation.includes(:player, :match)
-                                   .order(created_at: :desc)
+    @pagy, @participations = pagy(Participation.includes(:player, :match)
+                                               .order(created_at: :desc))
   end
 
   # GET /participations/1 or /participations/1.json
@@ -70,8 +70,12 @@ class ParticipationsController < ApplicationController
   end
 
   def select_options
-    @players_select ||= Player.pluck(:name, :id)
-    @matches_select ||= Match.pluck(:date, :id)
+    @players_select ||= if params[:player_id].present?
+      Player.where(id: params[:player_id]).pluck(:name, :id)
+    else
+      Player.pluck(:name, :id)
+    end
+    @matches_select ||= Match.all.map { |match| [ match.date.strftime('%d/%m/%Y'), match.id ] }
   end
 
   # Use callbacks to share common setup or constraints between actions.

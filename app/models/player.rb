@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Player < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
@@ -9,6 +11,11 @@ class Player < ApplicationRecord
 
   def total_goals
     participations.sum(:goals)
+  end
+
+  def self.top_scorer
+    Player.all.map { |player| [ player.name, player.participations.sum(:goals) ] }
+              .max_by { |_, goals| goals }
   end
 
   def total_matches

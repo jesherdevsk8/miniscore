@@ -1,5 +1,3 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Matches" %>
 
 <div class="container mt-4">
@@ -8,10 +6,10 @@
       <div class="d-flex justify-content-between align-items-center">
         <h5 class="mb-0">Lista de Partidas</h5>
         <div class="btn-group">
-          <%= link_to new_match_path, class: "btn btn-success" do %>
+          <%= link_to new_match_path, class: "btn btn-success btn-sm" do %>
             <i class="bi bi-person-plus"></i>
           <% end %>
-          <%= button_tag "Novo jogo", class: "btn btn-outline-dark", disabled: true %>
+          <%= button_tag "Novo jogo", class: "btn btn-outline-dark btn-sm", disabled: true %>
         </div>
       </div>
     </div>
@@ -30,8 +28,11 @@
               <td><%= match.date.strftime("%d/%m/%Y") %></td>
               <td><%= match.score %></td>
               <td>
-                <%= link_to match, class: "btn btn-primary btn-sm" do %>
+                <%= link_to match, class: "btn btn-secondary btn-sm" do %>
                   <i class="bi bi-eye-fill"></i>
+                <% end %>
+                 <%= link_to edit_match_path(match), class: "btn btn-primary btn-sm" do %>
+                  <i class="bi bi-pencil-square"></i>
                 <% end %>
               </td>
             </tr>

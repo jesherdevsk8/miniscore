@@ -5,7 +5,7 @@
 <div class="container mt-4">
   <div class="card">
     <div class="card-header">
-      <h1 class="mb-0"><%= @player.name %> - Camisa <%= @player.number %></h1>
+      <h4 class="mb-0"><%= @player.name %> - Camisa <%= @player.number %></h4>
     </div>
     <div class="card-body">
       <h5 class="card-title">Estatísticas do Jogador</h5>
@@ -21,7 +21,7 @@
   </div>
 
   <div class="mt-4 d-flex justify-content-start">
-    <%= link_to "Editar", edit_player_path(@player), class: "btn btn-primary me-2" %>
-    <%= button_to "Excluir", @player, method: :delete, data: { confirm: "Você tem certeza que deseja excluir este jogador?" }, class: "btn btn-danger" %>
+    <%= link_to "Editar", edit_player_path(@player), class: "btn btn-primary btn-sm me-2" %>
+    <%= button_to "Excluir", @player, method: :delete, data: { confirm: "Você tem certeza que deseja excluir este jogador?" }, class: "btn btn-danger btn-sm" %>
   </div>
 </div>
