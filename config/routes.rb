@@ -6,7 +6,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :classification, only: :index
+      resources :teams, only: :index
+      get 'teams/:slug/classifications', to: 'classification#show', as: :team_participations
     end
   end
 
