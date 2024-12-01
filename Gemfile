@@ -61,5 +61,3 @@ group :development do
   gem 'web-console'
   gem 'ruby-lsp-rails'
 end
-
-gem "faker", "~> 3.5"
