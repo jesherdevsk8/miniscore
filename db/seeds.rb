@@ -1,4 +1,9 @@
-### CRIAÇÃO DOS GOLEIROS
+### criação da equipe
+
+user = User.create!(name: 'Jesher Minelli', email: 'jesherdevsk8@gmail.com', password: 'senha@123')
+Team.create!(user: user, name: 'Oqtacontesseno FC', description: 'A equipe mais meme do mundo')
+
+### criação dos goleiros
 [
   { name: 'Jesher Minelli', nickname: 'Jesher', number: 22 },
   { name: 'Paulo Golero', nickname: 'Paulão', number: 12 },
@@ -12,7 +17,7 @@
   )
 end
 
-## CRIAÇÃO DOS JOGADORES DE LINHA
+### criação dos jogadores de linha
 [
   { name: 'Ana Duarte', nickname: 'Ana', number: 11 },
   { name: 'Renan Poli', nickname: 'Renan', number: 94 },
@@ -43,5 +48,3 @@ end
     number: player[:number]
   )
 end
-
-# User.create!(name: 'Jesher Minelli', email: 'jesherdevsk8@gmail.com', password: 'senha@123')

@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 class Match < ApplicationRecord
+  belongs_to :team
+
   has_many :participations, dependent: :destroy
   has_many :players, through: :participations
 
   accepts_nested_attributes_for :participations, allow_destroy: true
 
-  validates :date, presence: true
+  validates :date, :team, presence: true
   validates :score, presence: true, unless: -> { new_record? }
 
   private

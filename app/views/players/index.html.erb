@@ -14,43 +14,45 @@
       </div>
     </div>
     <div class="card-body">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Jogos</th>
-            <th>Aprov.</th>
-            <th>Gols</th>
-            <th>Vitórias</th>
-            <th>Empates</th>
-            <th>Derrotas</th>
-            <th>Média de gols</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @players.each do |player| %>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
             <tr>
-              <td><%= player.name %></td>
-              <td><%= player.total_matches %></td>
-              <td><%= player.percentage %>%</td>
-              <td><%= player.total_goals %></td>
-              <td><%= player.vitorias %></td>
-              <td><%= player.empates %></td>
-              <td><%= player.derrotas %></td>
-              <td><%= player.goals_per_matches %></td>
-              <td>
-                <%= link_to player, class: "btn btn-secondary btn-sm" do %>
-                  <i class="bi bi-eye-fill"></i>
-                <% end %>
-                <%= link_to edit_player_path(player), class: "btn btn-primary btn-sm" do %>
-                  <i class="bi bi-pencil-square"></i>
-                <% end %>
-              </td>
+              <th>Nome</th>
+              <th>Jogos</th>
+              <th>Aprov.</th>
+              <th>Gols</th>
+              <th>Vitórias</th>
+              <th>Empates</th>
+              <th>Derrotas</th>
+              <th>Média de gols</th>
+              <th>Ações</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            <% @players.each do |player| %>
+              <tr>
+                <td><%= player.name %></td>
+                <td><%= player.total_matches %></td>
+                <td><%= player.percentage %>%</td>
+                <td><%= player.total_goals %></td>
+                <td><%= player.vitorias %></td>
+                <td><%= player.empates %></td>
+                <td><%= player.derrotas %></td>
+                <td><%= player.goals_per_matches %></td>
+                <td>
+                  <%= link_to player, class: "btn btn-secondary btn-sm" do %>
+                    <i class="bi bi-eye-fill"></i>
+                  <% end %>
+                  <%= link_to edit_player_path(player), class: "btn btn-primary btn-sm" do %>
+                    <i class="bi bi-pencil-square"></i>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
 
       <!-- Paginação -->
       <div class="d-flex justify-content-center mt-4">

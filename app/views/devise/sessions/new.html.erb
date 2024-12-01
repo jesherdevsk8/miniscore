@@ -1,0 +1,37 @@
+<section class="vh-100">
+  <div class="container-fluid">
+    <div class="row">
+      <%= render "devise/shared/image" %>
+      <div class="col-sm-6 text-black">
+        <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name), style: "width: 23rem;") do |f| %>
+            <%= flash_message(resource) %>
+            <h3 class="fw-normal mb-3 pb-3" style="margin-top: 10px;letter-spacing: 1px;">LOGIN</h3>
+            <div class="form-outline mb-4">
+              <%= f.label :email, "E-mail" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-lg" %>
+            </div>
+
+            <div class="form-outline mb-4">
+              <%= f.label :password, "Senha" %>
+              <%= f.password_field :password, autocomplete: "current-password", class: "form-control form-control-lg" %>
+            </div>
+
+            <% if devise_mapping.rememberable? %>
+              <div class="field">
+                <%= f.check_box :remember_me %>
+                <%= f.label :remember_me, "Lembrar-me" %>
+              </div>
+            <% end %>
+
+            <div class="pt-1 mb-4">
+              <%= f.submit "Entrar", class: "btn btn-dark btn-light" %>
+            </div>
+
+            <%= render "devise/shared/links" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

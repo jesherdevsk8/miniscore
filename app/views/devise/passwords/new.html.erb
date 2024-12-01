@@ -1,0 +1,26 @@
+<section class="vh-100">
+  <div class="container-fluid">
+    <div class="row">
+      <%= render "devise/shared/image" %>
+      <div class="col-sm-6 text-black">
+        <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n">
+           <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "needs-validation" }) do |f| %>
+            <%= flash_message(resource) %>
+            <%= render "devise/shared/error_messages", resource: resource %>
+
+            <div class="form-outline mb-4">
+              <%= f.label :email, "E-mail", class: "form-label" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-lg" %>
+            </div>
+
+            <div class="d-grid">
+              <%= f.submit "Enviar instruções para redefinir senha", class: "btn btn-dark btn-ligh" %>
+            </div>
+
+            <%= render "devise/shared/links" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
