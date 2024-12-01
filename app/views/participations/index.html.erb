@@ -35,7 +35,9 @@
                     <%= link_to edit_participation_path(participation), class: "btn btn-primary btn-sm me-2" do %>
                       <i class="bi bi-pencil-fill"></i>
                     <% end %>
-                    <%= button_to participation_path(participation), method: :delete, class: "btn btn-danger btn-sm" do %>
+                    <%= button_to participation_path(participation), method: :delete,
+                                                                     data: { turbo_confirm: 'Tem certeza que deseja excluir esta participação?' }, 
+                                                                     class: "btn btn-danger btn-sm" do %>
                       <i class="bi bi-trash3-fill"></i>
                     <% end %>
                   </div>

@@ -1,11 +1,10 @@
 class MatchesController < ApplicationController
   before_action :set_match, only: %i[ show edit update destroy ]
   before_action :match_results, only: %i[ new create edit ]
-  # before_action :selected_players, only: :create
 
   # GET /matches or /matches.json
   def index
-    @pagy, @matches = pagy(Match.order(date: :desc))
+    @pagy, @matches = pagy(load_matches.order(date: :desc))
   end
 
   # GET /matches/1 or /matches/1.json
@@ -74,7 +73,7 @@ class MatchesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_match
-    @match = Match.find(params[:id])
+    @match = load_matches.find_by_id(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

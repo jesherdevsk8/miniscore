@@ -3,7 +3,7 @@ class PlayersController < ApplicationController
 
   # GET /players or /players.json
   def index
-    @pagy, @players = pagy(Player.order(:id))
+    @pagy, @players = pagy(load_players.order(:id))
   end
 
   # GET /players/1 or /players/1.json
@@ -61,7 +61,7 @@ class PlayersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_player
-    @player = Player.friendly.find(params[:id])
+    @player = load_players.friendly.find_by_slug(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

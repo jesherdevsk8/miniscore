@@ -1,27 +1,33 @@
-<div class="container mt-4">
-  <div class="card">
-    <div class="card-header">
-      <h5 class="mb-0">Editar Partida</h5>
-    </div>
-    <div class="card-body">
-      <%= form_with(model: match) do |form| %>
-        <div class="row">
-          <div class="col-md-6 mb-3">
-            <% if form.object.persisted? %>
-              <%= form.label :date, "Data", class: "form-label" %>
-              <%= form.date_field :date, class: "form-control form-control-sm px-2", disabled: true %>
-            <% else %>
-              <%= form.label :date, "Data", class: "form-label" %>
-              <%= form.date_field :date, class: "form-control form-control-sm px-2", required: true %>
-            <% end %>
+<% if @match %>
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Editar Partida</h5>
+      </div>
+      <div class="card-body">
+        <%= form_with(model: match) do |form| %>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <% if form.object.persisted? %>
+                <%= form.label :date, "Data", class: "form-label" %>
+                <%= form.date_field :date, class: "form-control form-control-sm px-2", disabled: true %>
+              <% else %>
+                <%= form.label :date, "Data", class: "form-label" %>
+                <%= form.date_field :date, class: "form-control form-control-sm px-2", required: true %>
+              <% end %>
+            </div>
+            <div class="col-md-6 mb-3">
+              <%= form.label :score, "Placar", class: "form-label" %>
+              <%= form.text_field :score, class: "form-control form-control-sm px-2", required: form.object.persisted? %>
+            </div>
           </div>
-          <div class="col-md-6 mb-3">
-            <%= form.label :score, "Placar", class: "form-label" %>
-            <%= form.text_field :score, class: "form-control form-control-sm px-2", required: form.object.persisted? %>
-          </div>
-        </div>
-        <%= form.submit "Salvar Partida", class: "btn btn-primary btn-sm" %>
-      <% end %>
+          <%= form.submit "Salvar Partida", class: "btn btn-primary btn-sm" %>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
+<% else %>
+  <div class="container mt-4">
+    <p>Partida nao encontrada</p>
+  </div>
+<% end %>

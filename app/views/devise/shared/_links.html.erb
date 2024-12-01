@@ -1,0 +1,42 @@
+<div class="mt-4">
+  <% if controller_name != 'sessions' %>
+    <a href="<%= new_session_path(resource_name) %>" class="pt-3 list-group-item list-group-item-action">
+      Entrar
+    </a>
+  <% end %>
+
+  <% if devise_mapping.registerable? && controller_name != 'registrations' %>
+    <a href="<%= new_registration_path(resource_name) %>" class="pt-3 list-group-item list-group-item-action">
+      Cadastrar-se
+    </a>
+  <% end %>
+
+  <% if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+    <a href="<%= new_password_path(resource_name) %>" class="pt-3 list-group-item list-group-item-action">
+      Esqueceu sua senha?
+    </a>
+  <% end %>
+
+  <% if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+    <a href="<%= new_confirmation_path(resource_name) %>" class="pt-3 list-group-item list-group-item-action">
+      Não recebeu instruções de confirmação?
+    </a>
+  <% end %>
+
+  <% if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
+    <a href="<%= new_unlock_path(resource_name) %>" class="pt-3 list-group-item list-group-item-action">
+      Não recebeu instruções para desbloquear a conta?
+    </a>
+  <% end %>
+
+  <% if devise_mapping.omniauthable? %>
+    <% resource_class.omniauth_providers.each do |provider| %>
+      <button type="button" 
+              class="pt-3 list-group-item list-group-item-action" 
+              onclick="location.href='<%= omniauth_authorize_path(resource_name, provider) %>'">
+        Entrar com <%= OmniAuth::Utils.camelize(provider) %>
+      </button>
+    <% end %>
+  <% end %>
+</div>
+

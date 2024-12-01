@@ -7,8 +7,7 @@ class ParticipationsController < ApplicationController
 
   # GET /participations or /participations.json
   def index
-    @pagy, @participations = pagy(Participation.includes(:player, :match)
-                                               .order(created_at: :desc))
+    @pagy, @participations = pagy(load_participations.order(created_at: :desc))
   end
 
   # GET /participations/1 or /participations/1.json
@@ -80,7 +79,7 @@ class ParticipationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_participation
-    @participation = Participation.find(params[:id])
+    @participation = load_participations.find_by_id(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

@@ -30,6 +30,12 @@
   border-color: #f8cfcf;
 }
 
+.alert {
+  color: #772b35;
+  background-color: #fadddd;
+  border-color: #f8cfcf;
+}
+
 .warning {
   color: #815c15;
   background-color: #feefd0;

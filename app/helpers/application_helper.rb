@@ -6,7 +6,7 @@ module ApplicationHelper
   def flash_message(resource = nil)
     messages = ''
 
-    %i[notice info warning error].each do |type|
+    %i[notice info warning error alert].each do |type|
       messages += "<div class=\"base-alert #{type}\" role='alert'>#{flash[type]}</div>" if flash[type]
     end
 

@@ -1,14 +1,19 @@
 <% content_for :title, "Editing participation" %>
 
+<% if @participation %>
+  <div class="container mt-4">
+    <%= flash_message(@participation) %>
 
-<div class="container mt-4">
-  <%= flash_message(@participation) %>
-
-  <div class="card shadow-sm">
-    <div class="card-header">
-      <h4 class="mb-0">Editar Participação</h4>
+    <div class="card shadow-sm">
+      <div class="card-header">
+        <h4 class="mb-0">Editar Participação</h4>
+      </div>
+      
+      <%= render "form", participation: @participation %>
     </div>
-    
-    <%= render "form", participation: @participation %>
   </div>
-</div>
+<% else %>
+  <div class="container mt-4">
+    <p>Partida nao encontrada!</p>
+  </div>
+<% end %>
