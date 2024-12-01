@@ -73,7 +73,7 @@ class MatchesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_match
-    @match = load_matches.find(params[:id])
+    @match = load_matches.find_by_id(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

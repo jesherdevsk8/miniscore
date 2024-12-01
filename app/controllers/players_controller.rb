@@ -61,7 +61,7 @@ class PlayersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_player
-    @player = load_players.friendly.find(params[:id])
+    @player = load_players.friendly.find_by_slug(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

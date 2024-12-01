@@ -79,7 +79,7 @@ class ParticipationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_participation
-    @participation = load_participations.find(params[:id])
+    @participation = load_participations.find_by_id(params[:id])
   end
 
   # Only allow a list of trusted parameters through.
