@@ -4,10 +4,12 @@ class Player < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: :slugged
 
+  belongs_to :team
+
   has_many :participations
   has_many :matches
 
-  validates :name, :number, presence: true
+  validates :name, :number, :team, presence: true
 
   def total_goals
     participations.sum(:goals)

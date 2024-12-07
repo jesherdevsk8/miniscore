@@ -1,25 +1,31 @@
-<p style="color: green"><%= notice %></p>
+<% if @participation %>
+  <p style="color: green"><%= notice %></p>
 
-<div class="card shadow-sm">
-  <div class="card-header">
-    <h4 class="mb-0">Detalhes da Participação</h4>
+  <div class="card shadow-sm">
+    <div class="card-header">
+      <h4 class="mb-0">Detalhes da Participação</h4>
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <strong>Jogador:</strong> <%= @participation.player.name %>
+      </div>
+      
+      <div class="mb-3">
+        <strong>Data da Partida:</strong> <%= @participation.match.date.strftime("%d/%m/%Y") %>
+      </div>
+
+      <div class="mb-3">
+        <strong>Gols:</strong> <%= @participation.goals %>
+      </div>
+
+      <div class="mb-3">
+        <strong>Resultado da Partida:</strong> <%= @participation.match_result %>
+      </div>
+
+    </div>
   </div>
-  <div class="card-body">
-    <div class="mb-3">
-      <strong>Jogador:</strong> <%= @participation.player.name %>
-    </div>
-    
-    <div class="mb-3">
-      <strong>Data da Partida:</strong> <%= @participation.match.date.strftime("%d/%m/%Y") %>
-    </div>
-
-    <div class="mb-3">
-      <strong>Gols:</strong> <%= @participation.goals %>
-    </div>
-
-    <div class="mb-3">
-      <strong>Resultado da Partida:</strong> <%= @participation.match_result %>
-    </div>
-
+<% else %>
+  <div class="container mt-4">
+    <p>Participação nao encontrada</p>
   </div>
-</div>
+<% end %>

@@ -1,16 +1,24 @@
-<div class="container mt-4">
-  <div class="card">
-    <div class="card-header">
-      <h5 class="mb-0">Detalhes da Partida</h5>
+<% if @match %>
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Detalhes da Partida</h5>
+      </div>
+      <div class="card-body">
+        <h6 class="card-title">Informações da Partida</h6>
+        <p><strong>Data:</strong> <%= @match.date.strftime("%d/%m/%Y") %></p>
+        <p><strong>Placar:</strong> <%= @match.score %></p>
+      </div>
     </div>
-    <div class="card-body">
-      <h6 class="card-title">Informações da Partida</h6>
-      <p><strong>Data:</strong> <%= @match.date.strftime("%d/%m/%Y") %></p>
-      <p><strong>Placar:</strong> <%= @match.score %></p>
+    <div class="mt-4 d-flex justify-content-start">
+      <%= link_to "Editar", edit_match_path(@match), class: "btn btn-primary btn-sm me-2" %>
+      <%= button_to "Excluir", match_path(@match), method: :delete, 
+                                                   data: { turbo_confirm: "Você tem certeza que deseja excluir este partida?" },
+                                                   class: "btn btn-danger btn-sm" %>
     </div>
   </div>
-  <div class="mt-4 d-flex justify-content-start">
-    <%= link_to "Editar", edit_match_path(@match), class: "btn btn-primary btn-sm me-2" %>
-    <%= button_to "Excluir", @match, method: :delete, data: { confirm: "Você tem certeza que deseja excluir esta partida?" }, class: "btn btn-danger btn-sm" %>
+<% else %>
+  <div class="container mt-4">
+    <p>Partida nao encontrada</p>
   </div>
-</div>
+<% end %>

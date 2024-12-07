@@ -1,27 +1,33 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @player %>
-
-<div class="container mt-4">
-  <div class="card">
-    <div class="card-header">
-      <h4 class="mb-0"><%= @player.name %> - Camisa <%= @player.number %></h4>
+<% if @player %>
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="mb-0"><%= @player.name %> - Camisa <%= @player.number %></h4>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Estatísticas do Jogador</h5>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Total de Partidas: <strong><%= @player.total_matches %></strong></li>
+          <li class="list-group-item">Total de Gols: <strong><%= @player.total_goals %></strong></li>
+          <li class="list-group-item">Vitórias: <strong><%= @player.vitorias %></strong></li>
+          <li class="list-group-item">Empates: <strong><%= @player.empates %></strong></li>
+          <li class="list-group-item">Derrotas: <strong><%= @player.derrotas %></strong></li>
+          <li class="list-group-item">Média de Gols por Partida: <strong><%= @player.goals_per_matches %></strong></li>
+        </ul>
+      </div>
     </div>
-    <div class="card-body">
-      <h5 class="card-title">Estatísticas do Jogador</h5>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Total de Partidas: <strong><%= @player.total_matches %></strong></li>
-        <li class="list-group-item">Total de Gols: <strong><%= @player.total_goals %></strong></li>
-        <li class="list-group-item">Vitórias: <strong><%= @player.vitorias %></strong></li>
-        <li class="list-group-item">Empates: <strong><%= @player.empates %></strong></li>
-        <li class="list-group-item">Derrotas: <strong><%= @player.derrotas %></strong></li>
-        <li class="list-group-item">Média de Gols por Partida: <strong><%= @player.goals_per_matches %></strong></li>
-      </ul>
+
+    <div class="mt-4 d-flex justify-content-start">
+      <%= link_to "Editar", edit_player_path(@player), class: "btn btn-primary btn-sm me-2" %>
+      <%= button_to "Excluir", player_path(@player), method: :delete, 
+                                                     data: { turbo_confirm: "Você tem certeza que deseja excluir este jogador?" },
+                                                     class: "btn btn-danger btn-sm" %>
     </div>
   </div>
-
-  <div class="mt-4 d-flex justify-content-start">
-    <%= link_to "Editar", edit_player_path(@player), class: "btn btn-primary btn-sm me-2" %>
-    <%= button_to "Excluir", @player, method: :delete, data: { confirm: "Você tem certeza que deseja excluir este jogador?" }, class: "btn btn-danger btn-sm" %>
+<% else %>
+  <div class="container mt-4">
+    <p>Jogador não encontrado</p>
   </div>
-</div>
+<% end %>
