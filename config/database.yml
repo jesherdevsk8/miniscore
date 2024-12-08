@@ -3,12 +3,13 @@ default: &default
   encoding: unicode
   timeout: 5000
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch("DATABASE_HOST", 'localhost') %>
   username: <%= ENV.fetch("DATABASE_USER", 'jesher') %>
   password: <%= ENV.fetch("DATABASE_PASSWORD", '') %>
 
 development:
   <<: *default
-  database: <%= ENV.fetch("DATABASE_NAME", 'mini_score_development') %>
+  database: mini_score_development
 
 test:
   <<: *default
@@ -17,5 +18,3 @@ test:
 production:
   <<: *default
   database: mini_score_production
-  username: mini_score
-  password: <%= ENV["MINI_SCORE_DATABASE_PASSWORD"] %>
