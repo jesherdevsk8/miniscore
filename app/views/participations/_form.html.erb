@@ -5,10 +5,10 @@
         <fieldset class="mb-4">
           <legend class="h5">Dados do Jogador e da Partida</legend>
           <div class="row">
-            <div class="col-md-4 col-sm-12 mt-3">
+            <div class="col-md-5 col-sm-12 mt-3">
               <%= form.label :player_id, "Jogador", class: "form-label" %>
               <% if form.object.player.present? %>
-                  <%= form.text_field :player_id, value: form.object.player.name, 
+                <%= form.text_field :player_id, value: form.object.player.name, 
                                     class: "form-control form-control-sm px-2 text-success", disabled: true %>
                 <%= form.hidden_field :player_id, value: form.object.player_id %>
               <% else %>

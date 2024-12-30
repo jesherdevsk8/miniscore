@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PlayersController < ApplicationController
   before_action :set_player, only: %i[ show edit update destroy ]
 
@@ -12,7 +14,7 @@ class PlayersController < ApplicationController
 
   # GET /players/new
   def new
-    @player = Player.new
+    @player = load_players.new
   end
 
   # GET /players/1/edit
@@ -21,7 +23,7 @@ class PlayersController < ApplicationController
 
   # POST /players or /players.json
   def create
-    @player = Player.new(player_params)
+    @player = load_players.new(player_params)
 
     respond_to do |format|
       if @player.save
