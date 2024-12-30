@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MatchesController < ApplicationController
   before_action :set_match, only: %i[ show edit update destroy ]
   before_action :match_results, only: %i[ new create edit ]
@@ -13,9 +15,9 @@ class MatchesController < ApplicationController
 
   # GET /matches/new
   def new
-    @match = Match.new
-    @players = Player.order(:name)
-    @players.each { |player| @match.participations.build(player: player) }
+    @match = load_matches.new
+    load_players.order(:name)
+                .each { |player| @match.participations.build(player: player) }
   end
 
   # GET /matches/1/edit
@@ -24,7 +26,7 @@ class MatchesController < ApplicationController
 
   # POST /matches or /matches.json
   def create
-    @match = Match.new(match_params)
+    @match = load_matches.new(match_params)
 
     respond_to do |format|
       if @match.save
@@ -32,9 +34,9 @@ class MatchesController < ApplicationController
         format.html { redirect_to @match }
         format.json { render :show, status: :created, location: @match }
       else
-        flash[:error] = 'Houve um erro ao criar a partida.'
+        flash[:error] = @match.errors.full_messages
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @match.errors, status: :unprocessable_entity }
+        format.json { render json: @match.errors.messages, status: :unprocessable_entity }
       end
     end
   end
@@ -47,9 +49,9 @@ class MatchesController < ApplicationController
         format.html { redirect_to @match }
         format.json { render :show, status: :ok, location: @match }
       else
-        flash[:error] = 'Houve um erro ao atualizar a partida!'
+        flash[:error] = @match.errors.full_messages
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @match.errors, status: :unprocessable_entity }
+        format.json { render json: @match.errors.messages, status: :unprocessable_entity }
       end
     end
   end

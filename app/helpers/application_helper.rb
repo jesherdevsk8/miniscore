@@ -7,7 +7,9 @@ module ApplicationHelper
     messages = ''
 
     %i[notice info warning error alert].each do |type|
-      messages += "<div class=\"base-alert #{type}\" role='alert'>#{flash[type]}</div>" if flash[type]
+      Array(flash[type]).each do |message|
+        messages += "<div class=\"base-alert #{type}\" role='alert'>#{message}</div>"
+      end
     end
 
     if resource&.errors&.any?

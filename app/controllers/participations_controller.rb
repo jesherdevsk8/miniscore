@@ -16,7 +16,7 @@ class ParticipationsController < ApplicationController
 
   # GET /participations/new
   def new
-    @participation = Participation.new
+    @participation = load_participations.new
     @participation.build_match
   end
 
@@ -26,13 +26,14 @@ class ParticipationsController < ApplicationController
 
   # POST /participations or /participations.json
   def create
-    @participation = Participation.new(participation_params)
+    @participation = load_participations.new(participation_params)
 
     respond_to do |format|
       if @participation.save
         format.html { redirect_to edit_participation_path(@participation), notice: 'Participação criada com sucesso.' }
         format.json { render :show, status: :created, location: @participation }
       else
+        flash[:error] = @participation.errors.full_messages
         format.html { render :new, status: :unprocessable_entity, alert: 'Houve um erro ao criar a participação.' }
         format.json { render json: @participation.errors, status: :unprocessable_entity }
       end
@@ -46,6 +47,7 @@ class ParticipationsController < ApplicationController
         format.html { redirect_to @participation, notice: 'Participação atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @participation }
       else
+        flash[:error] = @participation.errors.full_messages
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @participation.errors, status: :unprocessable_entity }
       end
@@ -70,11 +72,13 @@ class ParticipationsController < ApplicationController
 
   def select_options
     @players_select ||= if params[:player_id].present?
-      Player.where(id: params[:player_id]).pluck(:name, :id)
+      load_players.where(id: params[:player_id]).pluck(:name, :id)
     else
-      Player.pluck(:name, :id)
+      load_players.pluck(:name, :id)
     end
-    @matches_select ||= Match.all.map { |match| [ match.date.strftime('%d/%m/%Y'), match.id ] }
+    @matches_select ||= current_user_team.get_valid_matches.map do |match|
+      [ match.first.strftime('%d/%m/%Y'), match.last ]
+    end
   end
 
   # Use callbacks to share common setup or constraints between actions.
