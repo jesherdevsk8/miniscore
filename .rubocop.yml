@@ -9,7 +9,7 @@ inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.3.4
+  TargetRubyVersion: 3.4.1
   SuggestExtensions: false
 
 Style/StringLiterals:
