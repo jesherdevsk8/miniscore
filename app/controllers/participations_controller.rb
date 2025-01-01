@@ -5,7 +5,7 @@ class ParticipationsController < ApplicationController
   before_action :match_results, only: %i[ new create edit ]
   before_action :select_options, only: %i[ new create edit ]
 
-  # # GET /participations or /participations.json
+  # GET /participations or /participations.json
   def index
     @pagy, @participations = pagy(load_participations.order(created_at: :desc))
   end
