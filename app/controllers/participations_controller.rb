@@ -76,7 +76,7 @@ class ParticipationsController < ApplicationController
     else
       load_players.pluck(:name, :id)
     end
-    @matches_select ||= current_user_team.get_valid_matches.map do |match|
+    @matches_select ||= current_user_team.valid_matches.map do |match|
       [ match.first.strftime('%d/%m/%Y'), match.last ]
     end
   end

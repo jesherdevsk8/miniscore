@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Match < ApplicationRecord
+  include SharedModelMethods
+
   belongs_to :team
 
   has_many :participations, dependent: :destroy
@@ -10,6 +12,12 @@ class Match < ApplicationRecord
 
   validates :date, :team, presence: true
   validates :score, presence: true, unless: -> { new_record? }
+
+  scope :by_year, ->(year) {
+    return all unless year.present?
+
+    where(date: Date.new(year).beginning_of_year..Date.new(year).end_of_year)
+  }
 
   private
 
@@ -27,11 +35,11 @@ class Match < ApplicationRecord
   end
 
   def self.max_score
-    fetch_scores.max_by { |num, _| num }.last
+    fetch_scores.max_by { |num, _| num }&.last
   end
 
-  def self.min_score
-    fetch_scores.min_by { |num, _| num }.last
+  def self.min_score(year = Time.current.year)
+    fetch_scores.min_by { |num, _| num }&.last
   end
 
   def self.fetch_scores
@@ -42,7 +50,7 @@ class Match < ApplicationRecord
     #     memo[numeric_score] = score
     #   end
     # end
-    @fetch_scores ||= pluck(:score).compact_blank.each_with_object({}) do |score, memo|
+    pluck(:score).compact_blank.each_with_object({}) do |score, memo|
       numeric_score = score.gsub(/\D/, '').to_i
       memo[numeric_score] = score
     end
