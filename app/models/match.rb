@@ -34,8 +34,6 @@ class Match < ApplicationRecord
     fetch_scores.min_by { |num, _| num }.last
   end
 
-  private
-
   def self.fetch_scores
     # TODO: Implementar cache com Redis
     # Rails.cache.fetch('scores_cache', expires_in: 20.minutes) do
