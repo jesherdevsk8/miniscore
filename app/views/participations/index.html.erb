@@ -20,6 +20,7 @@
             <tr>
               <th>Data da Partida</th>
               <th>Nome do Jogador</th>
+              <th>Resultado</th>
               <th>Gols</th>
               <th>Ações</th>
             </tr>
@@ -29,6 +30,7 @@
               <tr>
                 <td><%= participation.match.date.strftime('%d/%m/%Y') %></td>
                 <td><%= participation.player.name %></td>
+                <td><%= match_result(participation) %></td>
                 <td><%= participation.goals %></td>
                 <td>
                   <div class="d-flex">
