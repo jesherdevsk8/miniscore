@@ -25,4 +25,28 @@ class Match < ApplicationRecord
 
     puts "#{sundays.count} success to create matches for all sundays at #{year}!"
   end
+
+  def self.max_score
+    fetch_scores.max_by { |num, _| num }.last
+  end
+
+  def self.min_score
+    fetch_scores.min_by { |num, _| num }.last
+  end
+
+  private
+
+  def self.fetch_scores
+    # TODO: Implementar cache com Redis
+    # Rails.cache.fetch('scores_cache', expires_in: 20.minutes) do
+    #   pluck(:score).compact_blank.each_with_object({}) do |score, memo|
+    #     numeric_score = score.gsub(/\D/, '').to_i
+    #     memo[numeric_score] = score
+    #   end
+    # end
+    @fetch_scores ||= pluck(:score).compact_blank.each_with_object({}) do |score, memo|
+      numeric_score = score.gsub(/\D/, '').to_i
+      memo[numeric_score] = score
+    end
+  end
 end
