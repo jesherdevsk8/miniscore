@@ -18,7 +18,7 @@ class Player < ApplicationRecord
   end
 
   def self.top_scorers(year = nil, max_by: false, sort_by: true)
-    #TODO: Otimizar esse metodo
+    # TODO: Otimizar esse metodo
     players = self.all.map do |player|
       [ player.name, player.participations.by_year(year).sum(:goals) ]
     end
