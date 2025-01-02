@@ -55,15 +55,47 @@
   </div>
 
   <div class="col-lg-3 col-md-6">
-    <div class="card border-info shadow-sm">
-      <div class="card-header bg-info text-white">
+    <div class="card border border-info shadow-sm">
+      <div class="card-header bg-info text-dark">
         <div class="d-flex align-items-center">
           <div class="flex-shrink-0">
-            <i class="bi bi-person-raised-hand fa-5x"></i>
+            <i class="bi bi-boxes fa-5x"></i>
           </div>
           <div class="flex-grow-1 text-end">
             <div class="h2"><%= @total_matches %></div>
             <div>Total de partidas!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6">
+    <div class="card border border-danger shadow-sm">
+      <div class="card-header bg-danger text-white">
+        <div class="d-flex align-items-center">
+          <div class="flex-shrink-0">
+            <i class="bi bi-arrow-down-circle-fill fa-5x"></i>
+          </div>
+          <div class="flex-grow-1 text-end">
+            <div class="h2"><%= @min_score %></div>
+            <div>Menor Placar!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6">
+    <div class="card border border-dark shadow-sm">
+      <div class="card-header bg-dark text-white">
+        <div class="d-flex align-items-center">
+          <div class="flex-shrink-0">
+            <i class="bi bi-arrow-up-circle-fill fa-5x"></i>
+          </div>
+          <div class="flex-grow-1 text-end">
+            <div class="h2"><%= @max_score %></div>
+            <div>Maior Placar!</div>
           </div>
         </div>
       </div>
