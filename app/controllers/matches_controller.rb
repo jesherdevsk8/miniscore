@@ -3,10 +3,11 @@
 class MatchesController < ApplicationController
   before_action :set_match, only: %i[ show edit update destroy ]
   before_action :match_results, only: %i[ new create edit ]
+  before_action :matches_options, only: :index
 
   # GET /matches or /matches.json
   def index
-    @pagy, @matches = pagy(load_matches.order(date: :desc))
+    @pagy, @matches = pagy(load_matches.by_date(params[:date]))
   end
 
   # GET /matches/1 or /matches/1.json

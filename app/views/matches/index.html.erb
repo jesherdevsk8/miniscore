@@ -1,10 +1,26 @@
-<% content_for :title, "Matches" %>
+<% content_for :title, "Partidas" %>
 
 <div class="container mt-4">
   <div class="card">
     <div class="card-header">
       <div class="d-flex justify-content-between align-items-center">
         <h5 class="mb-0">Lista de Partidas</h5>
+        <%# TODO: Melhorar esse filtro, considerar mudar para usar hotwire stimulus %>
+        <%= form_tag matches_path, method: :get, class: "d-flex align-items-center" do %>
+          <div class="input-group input-group-sm">
+            <%= select_tag :date, options_for_select(@matches_options, params[:date]), 
+                  class: "form-select", prompt: "Selecionar data", onchange: "this.form.submit()" %>
+            <span class="input-group-text">
+              <%= link_to matches_path,
+                    class: "text-primary icon-link icon-link-hover text-sm", 
+                    style: "--bs-icon-link-transform: scale(1.5) translate3d(0, -.225rem, 0)",
+                    data: { bs_toggle: "tooltip", bs_placement: "top" }, 
+                    title: "Limpar filtro" do %>
+                <i class="bi bi-x-circle"></i>
+              <% end %>
+            </span>
+          </div>
+        <% end %>
         <div class="btn-group">
           <%= link_to new_match_path, class: "btn btn-success btn-sm" do %>
             <i class="bi bi-person-plus"></i>
@@ -18,6 +34,7 @@
         <table class="table table-striped">
           <thead>
             <tr>
+              <th>ID</th>
               <th>Data</th>
               <th>Placar</th>
               <th>Ações</th>
@@ -26,6 +43,7 @@
           <tbody>
             <% @matches.each do |match| %>
               <tr>
+                <td><%= match.id.first(8) %></td>
                 <td><%= match.date.strftime("%d/%m/%Y") %></td>
                 <td><%= match.score %></td>
                 <td>

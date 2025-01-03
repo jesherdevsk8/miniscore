@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Player < ApplicationRecord
+  include SharedModelMethods
+
   extend FriendlyId
   friendly_id :name, use: :slugged
 
@@ -11,25 +13,20 @@ class Player < ApplicationRecord
 
   validates :name, :number, :team, presence: true
 
-  scope :participations_by_year, ->(year) {
-    return all unless year.present?
-
-    joins(:participations).where(
-      participations: { created_at: Time.new(year).beginning_of_year..Time.new(year).end_of_year }
-    ).distinct
-  }
+  scope :by_slug, ->(slug) { slug.present? ? where(slug: slug) : order(:id) }
 
   def total_goals(year = nil)
     participations.by_year(year).sum(:goals)
   end
 
   def self.top_scorers(year = nil, max_by: false, sort_by: true)
+    # TODO: Otimizar esse metodo
     players = self.all.map do |player|
       [ player.name, player.participations.by_year(year).sum(:goals) ]
     end
 
     players = players.sort_by { |_, goals| -goals } if sort_by
-    players = players.max_by { |_, goals| goals } if max_by
+    players = players.reject { |_, goals| goals.zero? }.max_by { |_, goals| goals } if max_by
 
     players
   end
