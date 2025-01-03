@@ -5,6 +5,22 @@
     <div class="card-header">
       <div class="d-flex justify-content-between align-items-center">
         <h5 class="mb-0">Participações</h5>
+        <%# TODO: Melhorar esse filtro, considerar mudar para usar hotwire stimulus %>
+        <%= form_tag participations_path, method: :get, class: "d-flex align-items-center" do %>
+          <div class="input-group input-group-sm">
+            <%= select_tag :date, options_for_select(@matches_options, params[:date]), 
+                  class: "form-select", prompt: "Selecione o jogador", onchange: "this.form.submit()" %>
+            <span class="input-group-text">
+              <%= link_to participations_path,
+                    class: "text-primary icon-link icon-link-hover text-sm", 
+                    style: "--bs-icon-link-transform: scale(1.5) translate3d(0, -.225rem, 0)",
+                    data: { bs_toggle: "tooltip", bs_placement: "top" }, 
+                    title: "Limpar filtro" do %>
+                <i class="bi bi-x-circle"></i>
+              <% end %>
+            </span>
+          </div>
+        <% end %>
         <div class="btn-group">
           <%= link_to new_participation_path, class: "btn btn-success btn-sm" do %>
             <i class="bi bi-calendar-plus"></i>
@@ -20,6 +36,7 @@
             <tr>
               <th>Data da Partida</th>
               <th>Nome do Jogador</th>
+              <th>Resultado</th>
               <th>Gols</th>
               <th>Ações</th>
             </tr>
@@ -29,6 +46,7 @@
               <tr>
                 <td><%= participation.match.date.strftime('%d/%m/%Y') %></td>
                 <td><%= participation.player.name %></td>
+                <td><%= match_result(participation) %></td>
                 <td><%= participation.goals %></td>
                 <td>
                   <div class="d-flex">
