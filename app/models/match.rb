@@ -19,6 +19,8 @@ class Match < ApplicationRecord
     where(date: Date.new(year).beginning_of_year..Date.new(year).end_of_year)
   }
 
+  scope :by_date, ->(date) { date.present? ? where(date: date) : order(date: :desc) }
+
   private
 
   def self.create_matches_for_sundays(year = Time.zone.now.year)

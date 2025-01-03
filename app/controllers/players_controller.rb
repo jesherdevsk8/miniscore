@@ -2,10 +2,11 @@
 
 class PlayersController < ApplicationController
   before_action :set_player, only: %i[ show edit update destroy ]
+  before_action :players_options, only: :index
 
   # GET /players or /players.json
   def index
-    @pagy, @players = pagy(load_players.order(:id))
+    @pagy, @players = pagy(load_players.by_slug(params[:slug]))
   end
 
   # GET /players/1 or /players/1.json
@@ -60,6 +61,10 @@ class PlayersController < ApplicationController
   end
 
   private
+
+  def players_options
+    @players_options ||= load_players.pluck(:name, :slug)
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_player

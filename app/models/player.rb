@@ -13,6 +13,8 @@ class Player < ApplicationRecord
 
   validates :name, :number, :team, presence: true
 
+  scope :by_slug, ->(slug) { slug.present? ? where(slug: slug) : order(:id) }
+
   def total_goals(year = nil)
     participations.by_year(year).sum(:goals)
   end

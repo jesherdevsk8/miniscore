@@ -14,17 +14,6 @@ module SharedModelMethods
   end
 
   class_methods do
-    def valid_matches
-      current_time = Time.current
-      first_day_of_year = Date.new(year).beginning_of_year
-
-      if self.class.name == 'Team'
-        matches.where(date: first_day_of_year..current_time.to_date).pluck(:date, :id)
-      elsif self.class.name == 'Match'
-        where(date: first_day_of_year..current_time.to_date).pluck(:date, :id)
-      else
-        []
-      end
-    end
+    # Metodos aqui
   end
 end

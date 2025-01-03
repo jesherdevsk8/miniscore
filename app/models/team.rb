@@ -15,6 +15,14 @@ class Team < ApplicationRecord
   validates :name, :slug, :user, presence: true
   validates :name, :slug, uniqueness: true
 
+  def valid_matches(current_year = false)
+    year = current_year ? Time.current.year : matches.order(:date).first&.date&.year
+    first_day_of_year = Date.new(year).beginning_of_year
+
+    matches.where(date: first_day_of_year..Time.current.to_date)
+           .order(date: :desc).pluck(:date, :id)
+  end
+
   def get_players(current_year = Time.current.year)
     players.participations_by_year(current_year).map do |player|
       {
