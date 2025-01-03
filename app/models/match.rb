@@ -40,7 +40,7 @@ class Match < ApplicationRecord
     fetch_scores.max_by { |num, _| num }&.last
   end
 
-  def self.min_score(year = Time.current.year)
+  def self.min_score
     fetch_scores.min_by { |num, _| num }&.last
   end
 
