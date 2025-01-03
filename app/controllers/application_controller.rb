@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
   private
 
   def current_user_team
-    current_user&.team
+    @current_user_team ||= Team.includes(:matches, :participations, :players)
+                               .find_by_id(current_user&.team&.id)
   end
 
   def load_matches
@@ -24,6 +25,11 @@ class ApplicationController < ActionController::Base
 
   def load_players
     @load_players ||= current_user_team&.players
+  end
+
+  def matches_options
+    @matches_options ||= load_matches.order(date: :desc).distinct.pluck(:date)
+                                     .map { |date| [ date.strftime('%d/%m/%Y'), date ] }
   end
 
   protected

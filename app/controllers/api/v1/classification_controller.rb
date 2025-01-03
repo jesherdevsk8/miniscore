@@ -7,27 +7,11 @@ module Api
 
       def show
         team = set_team
-        return render json: { error: 'Equipe n o encontrada' }, status: :not_found unless team
+        return render json: { error: 'Equipe não encontrada' }, status: :not_found unless team
 
-        players = team.players.map do |player|
-          {
-            name: player.name,
-            statistics: {
-              total_goals: player.total_goals,
-              total_matches: player.total_matches,
-              victories: player.vitorias,
-              defeats: player.derrotas,
-              draws: player.empates,
-              average_goals_per_match: player.goals_per_matches,
-              performance_percentage: player.percentage,
-              last_five_participations: player.last_five_participations
-            }
-          }
-        end
-
-        top_scorers = team.players.top_scorers.map do |player|
-          { name: player[0], goals: player[1] }
-        end
+        year = params[:year].present? ? Date.new(params[:year].to_i).year : Time.current.year
+        players = team.get_players(year)
+        top_scorers = team.get_top_scorers(year)
 
         render json: {
           data: players.sort_by { |hash| -hash[:statistics][:performance_percentage] },
@@ -36,10 +20,6 @@ module Api
       end
 
       private
-
-      def load_participations
-        @load_participations ||= set_team.participations
-      end
 
       def set_team
         @set_team ||= Team.find_by_slug(params[:slug])

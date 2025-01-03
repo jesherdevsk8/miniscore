@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Player < ApplicationRecord
+  include SharedModelMethods
+
   extend FriendlyId
   friendly_id :name, use: :slugged
 
@@ -11,49 +13,54 @@ class Player < ApplicationRecord
 
   validates :name, :number, :team, presence: true
 
-  def total_goals
-    participations.sum(:goals)
+  scope :by_slug, ->(slug) { slug.present? ? where(slug: slug) : order(:id) }
+
+  def total_goals(year = nil)
+    participations.by_year(year).sum(:goals)
   end
 
-  def self.top_scorers(max_by: false, sort_by: true)
-    players = Player.all.map do |player|
-      [ player.name, player.participations.sum(:goals) ]
+  def self.top_scorers(year = nil, max_by: false, sort_by: true)
+    # TODO: Otimizar esse metodo
+    players = self.all.map do |player|
+      [ player.name, player.participations.by_year(year).sum(:goals) ]
     end
 
     players = players.sort_by { |_, goals| -goals } if sort_by
-    players = players.max_by { |_, goals| goals } if max_by
+    players = players.reject { |_, goals| goals.zero? }.max_by { |_, goals| goals } if max_by
 
     players
   end
 
-  def total_matches
-    @total_matches ||= participations.size
+  def total_matches(year = nil)
+    @total_matches ||= participations.by_year(year).size
   end
 
-  def vitorias
-    participations.where(match_result: 'vitoria').size
+  def vitorias(year = nil)
+    participations.by_year(year).victory.size
   end
 
-  def empates
-    participations.where(match_result: 'empate').size
+  def empates(year = nil)
+    participations.by_year(year).draw.size
   end
 
-  def derrotas
-    participations.where(match_result: 'derrota').size
+  def derrotas(year = nil)
+    participations.by_year(year).defeat.size
   end
 
-  def goals_per_matches
+  def goals_per_matches(year = nil)
+    total_matches = total_matches(year)
     return 0 if total_matches.zero?
-    (total_goals.to_f / total_matches)&.round(2)
+    (total_goals(year).to_f / total_matches)&.round(2)
   end
 
-  def percentage
+  def percentage(year = nil)
+    total_matches = total_matches(year)
     return 0 if total_matches.zero?
-    ((vitorias * 3 + empates).to_f / (total_matches * 3) * 100).round
+    ((vitorias(year) * 3 + empates(year)).to_f / (total_matches * 3) * 100).round
   end
 
-  def last_five_participations
-    participations.map { |part| part.match_result }.last(5)
+  def last_five_participations(year = nil)
+    participations.by_year(year).map { |part| part.match_result }.last(5)
   end
 
   # Opcional: Atualiza o slug se o nome mudar

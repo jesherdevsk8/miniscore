@@ -4,10 +4,11 @@ class ParticipationsController < ApplicationController
   before_action :set_participation, only: %i[ show edit update destroy ]
   before_action :match_results, only: %i[ new create edit ]
   before_action :select_options, only: %i[ new create edit ]
+  before_action :matches_options, only: :index
 
   # GET /participations or /participations.json
   def index
-    @pagy, @participations = pagy(load_participations.order(created_at: :desc))
+    @pagy, @participations = pagy(load_participations.by_date(params[:date]))
   end
 
   # GET /participations/1 or /participations/1.json
@@ -76,7 +77,8 @@ class ParticipationsController < ApplicationController
     else
       load_players.pluck(:name, :id)
     end
-    @matches_select ||= current_user_team.get_valid_matches.map do |match|
+    # TODO: Mudar para valid_matches(true) após cadastrar partidas antigas
+    @matches_select ||= current_user_team.valid_matches.map do |match|
       [ match.first.strftime('%d/%m/%Y'), match.last ]
     end
   end
