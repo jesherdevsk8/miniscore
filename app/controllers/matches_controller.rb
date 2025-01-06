@@ -70,8 +70,10 @@ class MatchesController < ApplicationController
 
   private
 
-  def match_results
-    @match_results ||= Participation.results
+  def matches_options
+    # TODO: Try use redis cache
+    @matches_options ||= load_matches.order(date: :desc).distinct.pluck(:date)
+                                     .map { |date| [ date.strftime('%d/%m/%Y'), date ] }
   end
 
   # Use callbacks to share common setup or constraints between actions.

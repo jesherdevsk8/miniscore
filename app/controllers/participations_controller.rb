@@ -4,7 +4,7 @@ class ParticipationsController < ApplicationController
   before_action :set_participation, only: %i[ show edit update destroy ]
   before_action :match_results, only: %i[ new create edit ]
   before_action :select_options, only: %i[ new create edit ]
-  before_action :matches_options, only: :index
+  before_action :participation_options, only: :index
 
   # GET /participations or /participations.json
   def index
@@ -67,8 +67,10 @@ class ParticipationsController < ApplicationController
 
   private
 
-  def match_results
-    @match_results ||= Participation.results
+  def participation_options
+    # TODO: Try use redis cache
+    @participation_options ||= load_matches.joins(:participations).distinct.pluck(:date)
+                                           .map { |date| [ date.strftime('%d/%m/%Y'), date ] }
   end
 
   def select_options
@@ -77,7 +79,6 @@ class ParticipationsController < ApplicationController
     else
       load_players.pluck(:name, :id)
     end
-    # TODO: Mudar para valid_matches(true) após cadastrar partidas antigas
     @matches_select ||= current_user_team.valid_matches.map do |match|
       [ match.first.strftime('%d/%m/%Y'), match.last ]
     end

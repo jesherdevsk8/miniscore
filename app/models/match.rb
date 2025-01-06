@@ -23,7 +23,9 @@ class Match < ApplicationRecord
 
   private
 
-  def self.create_matches_for_sundays(year = Time.zone.now.year)
+  def self.create_matches_for_sundays(year = Time.zone.now.year, current_user = nil)
+    raise 'No current user passed' unless current_user.present?
+
     first_day_of_year = Date.new(year).beginning_of_year
     last_day_of_year = Date.new(year).end_of_year
 
