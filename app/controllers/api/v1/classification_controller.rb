@@ -12,10 +12,11 @@ module Api
         year = params[:year].present? ? Date.new(params[:year].to_i).year : Time.current.year
         players = team.get_players(year)
         top_scorers = team.get_top_scorers(year)
+        least_conceded_goalkeepers = team.least_conceded_goalkeepers(year)
 
         render json: {
           data: players.sort_by { |hash| -hash[:statistics][:performance_percentage] },
-          top_scorers: top_scorers
+          top_scorers: top_scorers, least_conceded_goalkeepers: least_conceded_goalkeepers
         }
       end
 
