@@ -27,9 +27,8 @@ class ApplicationController < ActionController::Base
     @load_players ||= current_user_team&.players
   end
 
-  def matches_options
-    @matches_options ||= load_matches.order(date: :desc).distinct.pluck(:date)
-                                     .map { |date| [ date.strftime('%d/%m/%Y'), date ] }
+  def match_results
+    @match_results ||= Participation.results
   end
 
   protected

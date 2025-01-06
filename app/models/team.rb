@@ -15,11 +15,11 @@ class Team < ApplicationRecord
   validates :name, :slug, :user, presence: true
   validates :name, :slug, uniqueness: true
 
-  def valid_matches(current_year = false)
-    year = current_year ? Time.current.year : matches.order(:date).first&.date&.year
-    first_day_of_year = Date.new(year).beginning_of_year
+  def valid_matches
+    current_time = Time.current
+    first_day_of_year = Date.new(current_time.year).beginning_of_year
 
-    matches.where(date: first_day_of_year..Time.current.to_date)
+    matches.where(date: first_day_of_year..current_time.to_date)
            .order(date: :desc).pluck(:date, :id)
   end
 

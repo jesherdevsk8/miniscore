@@ -8,7 +8,7 @@
         <%# TODO: Melhorar esse filtro, considerar mudar para usar hotwire stimulus %>
         <%= form_tag participations_path, method: :get, class: "d-flex align-items-center" do %>
           <div class="input-group input-group-sm">
-            <%= select_tag :date, options_for_select(@matches_options, params[:date]), 
+            <%= select_tag :date, options_for_select(@participation_options, params[:date]),
                   class: "form-select", prompt: "Selecione o jogador", onchange: "this.form.submit()" %>
             <span class="input-group-text">
               <%= link_to participations_path,
