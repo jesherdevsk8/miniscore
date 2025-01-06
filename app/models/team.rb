@@ -15,7 +15,6 @@ class Team < ApplicationRecord
   validates :name, :slug, :user, presence: true
   validates :name, :slug, uniqueness: true
 
-<<<<<<< HEAD
   def goalkeepers
     players.goalkeeper
   end
@@ -24,12 +23,6 @@ class Team < ApplicationRecord
     current_time = Time.current
     first_day_of_year = Date.new(current_time.year).beginning_of_year
 
-=======
-  def valid_matches
-    current_time = Time.current
-    first_day_of_year = Date.new(current_time.year).beginning_of_year
-
->>>>>>> c87117c941eb569847b643a986ac25f3ea80a6fb
     matches.where(date: first_day_of_year..current_time.to_date)
            .order(date: :desc).pluck(:date, :id)
   end
