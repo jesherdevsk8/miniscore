@@ -10,7 +10,7 @@ class Participation < ApplicationRecord
   validates :goals, numericality: { greater_than_or_equal_to: 0 }
   validates :match_result, :player, :match, :team, presence: true
 
-  after_save_commit :add_goals_conceded
+  after_create :add_goals_conceded
 
   scope :by_year, ->(year) {
     where(created_at: Time.new(year).beginning_of_year..Time.new(year).end_of_year) if year.present?
@@ -29,10 +29,12 @@ class Participation < ApplicationRecord
   def add_goals_conceded
     return unless player.goalkeeper? && match.score.present?
 
+    scores = match.score.split('x').map(&:to_i)
+
     goals = case
-    when victory? then match.score.split('x').min.to_i
-    when draw? then match.score.split('x')[0].to_i
-    else match.score.split('x').max.to_i
+    when victory? then scores.min
+    when draw? then scores[0]
+    else scores.max
     end
 
     match_year = match.date.year.to_s
