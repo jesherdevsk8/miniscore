@@ -13,6 +13,8 @@ class Match < ApplicationRecord
   validates :date, :team, presence: true
   validates :score, presence: true, unless: -> { new_record? }
 
+  after_update :update_goals_conceded
+
   scope :by_year, ->(year) {
     return all unless year.present?
 
@@ -22,6 +24,36 @@ class Match < ApplicationRecord
   scope :by_date, ->(date) { date.present? ? where(date: date) : order(date: :desc) }
 
   private
+
+  def match_year
+    @match_year ||=date.year.to_s
+  end
+
+  def update_goals_conceded
+    return unless (scores_hash = previous_changes[:score]).present?
+
+    previous_score = scores_hash.first.split('x').map(&:to_i)
+    new_score = scores_hash.last.split('x').map(&:to_i)
+
+    Participation.where(player: players.goalkeeper, match: self).each do |participation|
+      old_goals = case
+      when participation.victory? then previous_score.min
+      when participation.draw? then previous_score[0]
+      else previous_score.max
+      end
+
+      new_goals = case
+      when participation.victory? then new_score.min
+      when participation.draw? then new_score[0]
+      else new_score.max
+      end
+
+      participation.player.goals_conceded[match_year] ||= 0
+      participation.player.goals_conceded[match_year] -= old_goals if old_goals
+      participation.player.goals_conceded[match_year] += new_goals
+      participation.player.update_column(:goals_conceded, participation.player.goals_conceded)
+    end
+  end
 
   def self.create_matches_for_sundays(year = Time.zone.now.year, current_user = nil)
     raise 'No current user passed' unless current_user.present?
