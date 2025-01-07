@@ -35,6 +35,9 @@ class Participation < ApplicationRecord
     else match.score.split('x').max.to_i
     end
 
-    player.increment!(:goals_conceded, goals)
+    match_year = match.date.year.to_s
+    player.goals_conceded[match_year] ||= 0
+    player.goals_conceded[match_year] += goals
+    player.update_column(:goals_conceded, player.goals_conceded)
   end
 end

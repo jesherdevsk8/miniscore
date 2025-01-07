@@ -18,7 +18,8 @@
             </div>
             <div class="col-md-6 mb-3">
               <%= form.label :score, "Placar", class: "form-label" %>
-              <%= form.text_field :score, class: "form-control form-control-sm px-2", required: form.object.persisted? %>
+              <%= form.text_field :score, class: "form-control form-control-sm px-2", required: form.object.persisted?, 
+                                          disabled: form.object.persisted? && form.object.score.present? %>
             </div>
           </div>
           <%= form.submit "Salvar Partida", class: "btn btn-primary btn-sm" %>

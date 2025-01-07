@@ -53,15 +53,24 @@ class PlayersController < ApplicationController
 
   # DELETE /players/1 or /players/1.json
   def destroy
-    @player.destroy!
+    return render_json(status: :forbidden) if @player.participations.any?
 
-    respond_to do |format|
-      format.html { redirect_to players_path, status: :see_other, notice: 'Jogador deletado com sucesso.' }
-      format.json { head :no_content }
-    end
+    @player.destroy!
+    render_json(status: :ok)
   end
 
   private
+
+  def render_json(status: :ok)
+    message = status == :ok ? 'Jogador deletado com sucesso.' : 'Jogador possui participações.'
+    flash[:error] = message if status == :forbidden
+    flash[:notice] = message if status == :ok
+
+    respond_to do |format|
+      format.html { redirect_to players_path, status: :see_other, notice: message }
+      format.json { head :no_content }
+    end
+  end
 
   def positions_options
     @positions_options ||= Player.positions.invert.to_a
