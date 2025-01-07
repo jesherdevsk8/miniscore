@@ -53,8 +53,9 @@ class Team < ApplicationRecord
   end
 
   def least_conceded_goalkeepers(current_year = Time.current.year)
-    goalkeepers.participations_by_year(current_year).order(:goals_conceded).map do |player|
-      { name: player.name, goals: player.goals_conceded }
-    end
+    # TODO: Implementar Rails cache para melhorar o desempenho
+    goalkeepers.participations_by_year(current_year)
+               .sort_by { |player| player.goals_conceded[current_year.to_s] || 0 }
+               .map { |player| { name: player.name, goals: player.goals_conceded[current_year.to_s] || 0 } }
   end
 end

@@ -12,9 +12,11 @@
     </div>
     <div class="mt-4 d-flex justify-content-start">
       <%= link_to "Editar", edit_match_path(@match), class: "btn btn-primary btn-sm me-2" %>
-      <%= button_to "Excluir", match_path(@match), method: :delete, 
-                                                   data: { turbo_confirm: "Você tem certeza que deseja excluir este partida?" },
-                                                   class: "btn btn-danger btn-sm" %>
+      <% unless @match.participations.any? %>
+        <%= button_to "Excluir", match_path(@match), method: :delete, 
+                                                    data: { turbo_confirm: "Você tem certeza que deseja excluir este partida?" },
+                                                    class: "btn btn-danger btn-sm" %>
+      <% end %>
     </div>
   </div>
 <% else %>
