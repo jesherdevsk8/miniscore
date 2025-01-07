@@ -24,7 +24,14 @@
               <%= form.label :name, "Nome", class: "form-label" %>
               <%= form.text_field :name, class: "form-control form-control-sm px-2", required: true %>
             </div>
-            
+
+            <div class="col-md-6">
+              <%= form.label :position, "Posição", class: "form-label" %>
+              <%= form.select :position, @positions_options, { prompt: "Selecione" }, class: "form-select form-select-sm px-2", required: true %>
+            </div>
+          </div>
+
+          <div class="row mb-3">
             <div class="col-md-6">
               <%= form.label :number, "Número da Camisa", class: "form-label" %>
               <%= form.number_field :number, class: "form-control form-control-sm px-2", required: true, min: 0, step: 1 %>

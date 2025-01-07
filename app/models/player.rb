@@ -12,6 +12,9 @@ class Player < ApplicationRecord
   has_many :matches
 
   validates :name, :number, :team, presence: true
+  validates :position, presence: true
+
+  enum position: { goalkeeper: 'goleiro', field: 'linha' }
 
   scope :by_slug, ->(slug) { slug.present? ? where(slug: slug) : order(:id) }
 

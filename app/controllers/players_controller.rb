@@ -3,6 +3,7 @@
 class PlayersController < ApplicationController
   before_action :set_player, only: %i[ show edit update destroy ]
   before_action :players_options, only: :index
+  before_action :positions_options, only: %i[new create edit update]
 
   # GET /players or /players.json
   def index
@@ -62,6 +63,10 @@ class PlayersController < ApplicationController
 
   private
 
+  def positions_options
+    @positions_options ||= Player.positions.invert.to_a
+  end
+
   def players_options
     @players_options ||= load_players.pluck(:name, :slug)
   end
@@ -73,6 +78,6 @@ class PlayersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def player_params
-    params.require(:player).permit(:name, :number, :slug, :nickname)
+    params.require(:player).permit(:name, :number, :slug, :nickname, :position)
   end
 end

@@ -1,24 +1,28 @@
-# README
+# Mini Score
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Este é um projeto de uma aplicação web para gerenciamento de jogos em uma liga de futebol Society Amador.
 
-Things you may want to cover:
+## Ambiente de desenvolvimento
 
-* Ruby version
+Para rodar o projeto em ambiente de desenvolvimento, é necessário ter:
 
-* System dependencies
+* Ruby 3.3.4
+* Rails 7.2.1
+* PostgreSQL 14.15
+* nodejs 22.9.0
+* Yarn
 
-* Configuration
+## Instalação
 
-* Database creation
+Clone o repositório e execute o comando `bundle install` para instalar as dependências.
 
-* Database initialization
+## Configuração
 
-* How to run the test suite
+Edite o arquivo `config/database.yml` com suas credenciais local:
 
-* Services (job queues, cache servers, search engines, etc.)
+## Execução
 
-* Deployment instructions
+Execute os comandos
 
-* ...
+* bin/rails db:create db:migrate db:seed
+* bin/dev
