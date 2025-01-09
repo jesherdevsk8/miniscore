@@ -16,7 +16,9 @@ class Player < ApplicationRecord
 
   enum position: { goalkeeper: 'goleiro', field: 'linha' }
 
-  scope :by_slug, ->(slug) { slug.present? ? where(slug: slug) : order(:id) }
+  scope :by_slug, ->(slug) {
+    slug.present? ? where('slug LIKE ? OR name LIKE ?', "%#{slug}%", "%#{slug}%").order(:name) : order(:name)
+  }
 
   def total_goals(year = nil)
     participations.by_year(year).sum(:goals)

@@ -21,7 +21,9 @@ class Match < ApplicationRecord
     where(date: Date.new(year).beginning_of_year..Date.new(year).end_of_year)
   }
 
-  scope :by_date, ->(date) { date.present? ? where(date: date) : order(date: :desc) }
+  scope :by_date, ->(date) {
+    date.present? ? where(date: date).order(date: :desc) : order(date: :desc)
+  }
 
   private
 

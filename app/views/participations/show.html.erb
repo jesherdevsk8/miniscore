@@ -1,5 +1,5 @@
 <% if @participation %>
-  <div class="card shadow-sm">
+  <div class="card shadow-sm mt-4">
     <div class="card-header">
       <h4 class="mb-0">Detalhes da Participação</h4>
     </div>
@@ -19,11 +19,10 @@
       <div class="mb-3">
         <strong>Resultado da Partida:</strong> <%= match_result(@participation) %>
       </div>
-
     </div>
   </div>
 <% else %>
-  <div class="container mt-4">
+  <div class="container-fluid mt-4">
     <p>Participação nao encontrada</p>
   </div>
 <% end %>

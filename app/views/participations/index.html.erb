@@ -1,73 +1,78 @@
-<% content_for :title, "Participations" %>
+<% content_for :title, "Participações" %>
 
-<div class="container mt-4">
-  <div class="card">
-    <div class="card-header">
-      <div class="d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Participações</h5>
-        <%# TODO: Melhorar esse filtro, considerar mudar para usar hotwire stimulus %>
-        <%= form_tag participations_path, method: :get, class: "d-flex align-items-center" do %>
-          <div class="input-group input-group-sm">
-            <%= select_tag :date, options_for_select(@participation_options, params[:date]),
-                  class: "form-select", prompt: "Selecione o jogador", onchange: "this.form.submit()" %>
-            <span class="input-group-text">
-              <%= link_to participations_path,
-                    class: "text-primary icon-link icon-link-hover text-sm", 
-                    style: "--bs-icon-link-transform: scale(1.5) translate3d(0, -.225rem, 0)",
-                    data: { bs_toggle: "tooltip", bs_placement: "top" }, 
-                    title: "Limpar filtro" do %>
-                <i class="bi bi-x-circle"></i>
+<div class="container-fluid mt-4">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Participações</h5>
+            <div class="btn-group">
+              <%= link_to new_participation_path, class: "btn btn-success btn-sm" do %>
+                <i class="bi bi-calendar-plus"></i>
               <% end %>
-            </span>
+              <%= button_tag "Nova Participação", class: "btn btn-outline-dark btn-sm", disabled: true %>
+            </div>
           </div>
-        <% end %>
-        <div class="btn-group">
-          <%= link_to new_participation_path, class: "btn btn-success btn-sm" do %>
-            <i class="bi bi-calendar-plus"></i>
-          <% end %>
-          <%= button_tag "Nova Participação", class: "btn btn-outline-dark btn-sm", disabled: true %>
         </div>
-      </div>
-    </div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Data da Partida</th>
-              <th>Nome do Jogador</th>
-              <th>Resultado</th>
-              <th>Gols</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @participations.each do |participation| %>
-              <tr>
-                <td><%= participation.match.date.strftime('%d/%m/%Y') %></td>
-                <td><%= participation.player.name %></td>
-                <td><%= match_result(participation) %></td>
-                <td><%= participation.goals %></td>
-                <td>
-                  <div class="d-flex">
-                    <%= link_to edit_participation_path(participation), class: "btn btn-primary btn-sm me-2" do %>
-                      <i class="bi bi-pencil-fill"></i>
-                    <% end %>
-                    <%= button_to participation_path(participation), method: :delete,
-                                                                     data: { turbo_confirm: 'Tem certeza que deseja excluir esta participação?' }, 
-                                                                     class: "btn btn-danger btn-sm" do %>
-                      <i class="bi bi-trash3-fill"></i>
-                    <% end %>
-                  </div>
-                </td>
-              </tr>
+        <div class="card-body w-100 overflow-auto">
+          <div class="mt-2 mb-3 d-md-flex justify-content-md-left w-100">
+            <%= form_tag participations_path, method: :get, class: "d-flex flex-column align-items-center col-md-6  col-12" do %>
+              <div class="input-group mb-2 col-12">
+                <%= text_field_tag :slug, params[:slug],
+                      class: "form-control", placeholder: "Filtrar jogador",
+                      onchange: "this.form.submit()" %>
+                <%= button_tag "<i class='bi bi-x-circle fs-5'></i>".html_safe,
+                               class: "btn btn-secondary btn-sm",
+                               onclick: "this.form.slug.value = null; this.form.submit();" %>
+              </div>
+              <div class="input-group col-12">
+                <%= select_tag :date, options_for_select(@participation_options, params[:date]),
+                                class: "form-select", prompt: "Selecione uma data",
+                                onchange: "this.form.submit()" %>
+                <%= button_tag "<i class='bi bi-x-circle fs-5'></i>".html_safe,
+                               class: "btn btn-secondary btn-sm",
+                               onclick: "this.form.date.value = null; this.form.submit();" %>
+              </div>
             <% end %>
-          </tbody>
-        </table>
-
-        <!-- Paginação -->
-        <div class="d-flex justify-content-center mt-4">
-          <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+          </div>
+          <div class="table-responsive mx-auto">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Data da Partida</th>
+                  <th class="text-center">Nome do Jogador</th>
+                  <th class="text-center">Resultado</th>
+                  <th class="text-center">Gols</th>
+                  <th class="text-center">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @participations.each do |participation| %>
+                  <tr>
+                    <td><%= participation.match.date.strftime('%d/%m/%Y') %></td>
+                    <td class="text-center"><%= participation.player.name %></td>
+                    <td class="text-center"><%= match_result(participation) %></td>
+                    <td class="text-center"><%= participation.goals %></td>
+                    <td class="text-center d-flex gap-1 justify-content-center">
+                      <%= link_to edit_participation_path(participation), class: "btn btn-primary btn-sm" do %>
+                        <i class="bi bi-pencil-fill"></i>
+                      <% end %>
+                      <%= button_to participation_path(participation), method: :delete,
+                                                                        data: { turbo_confirm: 'Tem certeza que deseja excluir esta participação?' },
+                                                                        class: "btn btn-danger btn-sm" do %>
+                        <i class="bi bi-trash3-fill"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <!-- Paginação -->
+            <div class="d-flex justify-content-center mt-4">
+              <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+            </div>
+          </div>
         </div>
       </div>
     </div>

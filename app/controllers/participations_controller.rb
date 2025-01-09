@@ -8,7 +8,7 @@ class ParticipationsController < ApplicationController
 
   # GET /participations or /participations.json
   def index
-    @pagy, @participations = pagy(load_participations.by_date(params[:date]))
+    @pagy, @participations = pagy(load_participations.by_date(params[:date]).by_slug(params[:slug]))
   end
 
   # GET /participations/1 or /participations/1.json
@@ -69,7 +69,8 @@ class ParticipationsController < ApplicationController
 
   def participation_options
     # TODO: Try use redis cache
-    @participation_options ||= load_matches.joins(:participations).distinct.pluck(:date)
+    @participation_options ||= load_matches.joins(:participations)
+                                           .order(date: :desc).distinct.pluck(:date)
                                            .map { |date| [ date.strftime('%d/%m/%Y'), date ] }
   end
 
