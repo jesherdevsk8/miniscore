@@ -1,26 +1,37 @@
 <% if @match %>
-  <div class="container mt-4">
-    <div class="card">
-      <div class="card-header">
-        <h5 class="mb-0">Detalhes da Partida</h5>
+  <div class="container-fluid mt-4">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+              <h5 class="mb-0">Detalhes da Partida</h5>
+              <div class="btn-group">
+                <%= link_to edit_match_path(@match), class: "btn btn-primary btn-sm me-2" do %>
+                  <i class="bi bi-pencil-fill"></i> Editar
+                <% end %>
+                <% unless @match.participations.any? %>
+                  <%= button_to match_path(@match), method: :delete,
+                                                    data: { turbo_confirm: "Voce tem certeza que deseja excluir esta partida?" },
+                                                    class: "btn btn-danger btn-sm",
+                                                    title: "Excluir" do %>
+                    <i class="bi bi-trash3-fill"></i> Excluir
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h6 class="card-title">Informações da Partida</h6>
+            <p><strong>Data:</strong> <%= @match.date.strftime("%d/%m/%Y") %></p>
+            <p><strong>Placar:</strong> <%= @match.score %></p>
+          </div>
+        </div>
       </div>
-      <div class="card-body">
-        <h6 class="card-title">Informações da Partida</h6>
-        <p><strong>Data:</strong> <%= @match.date.strftime("%d/%m/%Y") %></p>
-        <p><strong>Placar:</strong> <%= @match.score %></p>
-      </div>
-    </div>
-    <div class="mt-4 d-flex justify-content-start">
-      <%= link_to "Editar", edit_match_path(@match), class: "btn btn-primary btn-sm me-2" %>
-      <% unless @match.participations.any? %>
-        <%= button_to "Excluir", match_path(@match), method: :delete, 
-                                                    data: { turbo_confirm: "Você tem certeza que deseja excluir este partida?" },
-                                                    class: "btn btn-danger btn-sm" %>
-      <% end %>
     </div>
   </div>
 <% else %>
-  <div class="container mt-4">
+  <div class="container-fluid mt-4">
     <p>Partida nao encontrada</p>
   </div>
 <% end %>

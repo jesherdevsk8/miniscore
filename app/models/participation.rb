@@ -22,6 +22,10 @@ class Participation < ApplicationRecord
     joins(:match).where(matches: { date: date })
   }
 
+  scope :by_slug, ->(slug) {
+    joins(:player).where('players.slug LIKE ? OR players.name LIKE ?', "%#{slug}%", "%#{slug}%")
+  }
+
   def self.results
     match_results.except('_prefix').invert.map { |k, v| [ k.humanize, v ] }
   end

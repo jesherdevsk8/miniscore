@@ -1,78 +1,79 @@
 <% content_for :title, "Jogadores" %>
 
-<div class="container mt-4">
-  <div class="card">
-    <div class="card-header">
-      <div class="d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Lista de Jogadores</h5>
-        <%# TODO: Melhorar esse filtro, considerar mudar para usar hotwire stimulus %>
-        <%= form_tag players_path, method: :get, class: "d-flex align-items-center" do %>
-          <div class="input-group input-group-sm">
-            <%= select_tag :slug, options_for_select(@players_options, params[:slug]), 
-                  class: "form-select", prompt: "Selecione o jogador", onchange: "this.form.submit()" %>
-            <span class="input-group-text">
-              <%= link_to players_path,
-                    class: "text-primary icon-link icon-link-hover text-sm", 
-                    style: "--bs-icon-link-transform: scale(1.5) translate3d(0, -.225rem, 0)",
-                    data: { bs_toggle: "tooltip", bs_placement: "top" }, 
-                    title: "Limpar filtro" do %>
-                <i class="bi bi-x-circle"></i>
+<div class="container-fluid mt-4">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Lista de Jogadores</h5>
+            <div class="btn-group">
+              <%= link_to new_player_path, class: "btn btn-success btn-sm d-flex justify-content-center align-items-center" do %>
+                <i class="bi bi-person-plus d-flex align-items-center justify-content-center"></i>
               <% end %>
-            </span>
+              <%= button_tag "Novo jogador", class: "btn btn-outline-dark btn-sm", disabled: true %>
+            </div>
           </div>
-        <% end %>
-        <div class="btn-group">
-          <%= link_to new_player_path, class: "btn btn-success btn-sm" do %>
-            <i class="bi bi-person-plus"></i>
-          <% end %>
-          <%= button_tag "Novo jogador", class: "btn btn-outline-dark btn-sm", disabled: true %>
         </div>
-      </div>
-    </div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Jogos</th>
-              <th>Aprov.</th>
-              <th>Gols</th>
-              <th>Vitórias</th>
-              <th>Empates</th>
-              <th>Derrotas</th>
-              <th>Média de gols</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @players.each do |player| %>
-              <tr>
-                <td><%= player.name %></td>
-                <td><%= player.total_matches %></td>
-                <td><%= player.percentage %>%</td>
-                <td><%= player.total_goals %></td>
-                <td><%= player.vitorias %></td>
-                <td><%= player.empates %></td>
-                <td><%= player.derrotas %></td>
-                <td><%= player.goals_per_matches %></td>
-                <td>
-                  <%= link_to player, class: "btn btn-secondary btn-sm" do %>
-                    <i class="bi bi-eye-fill"></i>
-                  <% end %>
-                  <%= link_to edit_player_path(player), class: "btn btn-primary btn-sm" do %>
-                    <i class="bi bi-pencil-square"></i>
-                  <% end %>
-                </td>
-              </tr>
+        <div class="card-body w-100 overflow-auto">
+          <div class="mt-2 mb-3 d-md-flex justify-content-md-left w-100">
+            <%= form_tag players_path, method: :get, class: "d-flex align-items-center col-md-6 col-12" do %>
+              <div class="input-group col-12">
+                <%= text_field_tag :slug, params[:slug], 
+                      class: "form-control", placeholder: "Filtrar jogador", 
+                      onchange: "this.form.submit()" %>
+                <%= button_tag "<i class='bi bi-x-circle fs-5'></i>".html_safe,
+                               class: "btn btn-secondary btn-sm",
+                               onclick: "this.form.slug.value = null; this.form.submit();" %>
+              </div>
             <% end %>
-          </tbody>
-        </table>
-      </div>
+          </div>
 
-      <!-- Paginação -->
-      <div class="d-flex justify-content-center mt-4">
-        <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+          <div class="table-responsive mx-auto">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th class="">Nome</th>
+                  <th class="text-center">J</th>
+                  <th class="text-center">%.</th>
+                  <th class="text-center">V</th>
+                  <th class="text-center">E</th>
+                  <th class="text-center">D</th>
+                  <th class="text-center">MG</th>
+                  <th class="text-center">G</th>
+                  <th class="text-center">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @players.sort_by(&:percentage).reverse.each do |player| %>
+                  <tr>
+                    <td><%= player.name %></td>
+                    <td class="text-center"><%= player.total_matches %></td>
+                    <td class="text-center"><%= player.percentage %>%</td>
+                    <td class="text-center"><%= player.vitorias %></td>
+                    <td class="text-center"><%= player.empates %></td>
+                    <td class="text-center"><%= player.derrotas %></td>
+                    <td class="text-center"><%= player.goals_per_matches %></td>
+                    <td class="text-center"><%= player.total_goals %></td>
+                    <td class="text-center d-flex gap-1 justify-content-center">
+                      <%= link_to player, class: "btn btn-secondary btn-sm" do %>
+                        <i class="bi bi-eye-fill"></i>
+                      <% end %>
+                      <%= link_to edit_player_path(player), class: "btn btn-primary btn-sm" do %>
+                        <i class="bi bi-pencil-square"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Paginação -->
+          <div class="d-flex justify-content-center mt-4">
+            <%= pagy_bootstrap_nav(@pagy) if @pagy.pages > 1 %>
+          </div>
+        </div>
       </div>
     </div>
   </div>

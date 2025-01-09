@@ -1,33 +1,42 @@
 <% if @player %>
-  <div class="container mt-4">
-    <div class="card">
-      <div class="card-header">
-        <h4 class="mb-0"><%= @player.name %> - Camisa <%= @player.number %></h4>
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">Estatísticas do Jogador</h5>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">Total de Partidas: <strong><%= @player.total_matches %></strong></li>
-          <li class="list-group-item">Total de Gols: <strong><%= @player.total_goals %></strong></li>
-          <li class="list-group-item">Vitórias: <strong><%= @player.vitorias %></strong></li>
-          <li class="list-group-item">Empates: <strong><%= @player.empates %></strong></li>
-          <li class="list-group-item">Derrotas: <strong><%= @player.derrotas %></strong></li>
-          <li class="list-group-item">Média de Gols por Partida: <strong><%= @player.goals_per_matches %></strong></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="mt-4 d-flex justify-content-start">
-      <%= link_to "Editar", edit_player_path(@player), class: "btn btn-primary btn-sm me-2" %>
-      <% unless @player.participations.any? %>
-        <%= button_to "Excluir", player_path(@player), method: :delete, 
-                                                      data: { turbo_confirm: "Você tem certeza que deseja excluir este jogador?" },
-                                                      class: "btn btn-danger btn-sm" %>
-      <% end %>
+  <div class="container-fluid mt-4">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+              <h4 class="mb-0"><%= @player.name %> - Camisa <%= @player.number %></h4>
+              <div class="btn-group">
+                <%= link_to edit_player_path(@player), class: "btn btn-primary btn-sm me-2" do %>
+                  <i class="bi bi-pencil-fill"></i> Editar
+                <% end %>
+                <% unless @player.participations.any? %>
+                  <%= button_to player_path(@player), method: :delete,
+                                                    data: { turbo_confirm: "Você tem certeza que deseja excluir este jogador?" },
+                                                    class: "btn btn-danger btn-sm",
+                                                    title: "Excluir" do %>
+                    <i class="bi bi-trash3-fill"></i> Excluir
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">Estatísticas do Jogador</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Total de Partidas: <strong><%= @player.total_matches %></strong></li>
+              <li class="list-group-item">Total de Gols: <strong><%= @player.total_goals %></strong></li>
+              <li class="list-group-item">Vitórias: <strong><%= @player.vitorias %></strong></li>
+              <li class="list-group-item">Empates: <strong><%= @player.empates %></strong></li>
+              <li class="list-group-item">Derrotas: <strong><%= @player.derrotas %></strong></li>
+              <li class="list-group-item">Média de Gols por Partida: <strong><%= @player.goals_per_matches %></strong></li>
+            </ul>
+          </div>
+        </div>
     </div>
   </div>
 <% else %>
-  <div class="container mt-4">
+  <div class="container-fluid mt-4">
     <p>Jogador não encontrado</p>
   </div>
 <% end %>
