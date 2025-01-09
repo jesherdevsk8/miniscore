@@ -1,6 +1,15 @@
 <% content_for :title, "Partidas" %>
 
 <div class="container-fluid mt-4">
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4 mb-4">
+    <%= form_tag matches_path, method: :get, class: "d-flex flex-column flex-md-row align-items-center" do %>
+      <div class="input-group">
+        <%= select_tag :year, options_for_select(@years, params[:year]), class: "form-select me-2 me-md-0", 
+              prompt: "Selecione um ano", onchange: "this.form.submit()" %>
+      </div>
+    <% end %>
+  </div>
+
   <div class="row">
     <div class="col-md-12">
       <div class="card">
