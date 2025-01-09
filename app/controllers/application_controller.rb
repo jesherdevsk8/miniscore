@@ -31,6 +31,11 @@ class ApplicationController < ActionController::Base
     @match_results ||= Participation.results
   end
 
+  def set_years
+    @years ||= load_matches.select('DISTINCT EXTRACT(YEAR FROM date) AS year')
+                           .map { |match| match.year.to_i }
+  end
+
   protected
 
   def configure_permitted_parameters

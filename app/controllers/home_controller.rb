@@ -16,11 +16,4 @@ class HomeController < ApplicationController
     # TODO: Fazer calculo de empates, adicionar uma coluna resultado tbm na partida
     # @total_draws   = load_participations.by_year(year).draw.size
   end
-
-  private
-
-  def set_years
-    @years ||= load_matches.select('DISTINCT EXTRACT(YEAR FROM date) AS year')
-                           .map { |match| match.year.to_i }
-  end
 end

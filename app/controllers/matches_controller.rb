@@ -3,7 +3,7 @@
 class MatchesController < ApplicationController
   before_action :set_match, only: %i[ show edit update destroy ]
   before_action :match_results, only: %i[ new create edit ]
-  before_action :matches_options, only: :index
+  before_action :matches_options, :set_years, only: :index
 
   # GET /matches or /matches.json
   def index
@@ -71,8 +71,10 @@ class MatchesController < ApplicationController
   private
 
   def matches_options
+    year = params[:year].present? ? Date.new(params[:year].to_i).year : Time.current.year
+
     # TODO: Try use redis cache
-    @matches_options ||= load_matches.order(date: :desc).distinct.pluck(:date)
+    @matches_options ||= load_matches.by_year(year).order(date: :desc).distinct.pluck(:date)
                                      .map { |date| [ date.strftime('%d/%m/%Y'), date ] }
   end
 
