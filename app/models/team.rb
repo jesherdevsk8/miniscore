@@ -20,8 +20,7 @@ class Team < ApplicationRecord
   end
 
   def valid_matches
-    current_time = Time.current - 1.year # Temporário
-    # current_time = Time.current
+    current_time = Time.current
     first_day_of_year = Date.new(current_time.year).beginning_of_year
 
     matches.where(date: first_day_of_year..current_time.to_date)
