@@ -65,7 +65,8 @@ class Player < ApplicationRecord
   end
 
   def last_five_participations(year = nil)
-    participations.by_year(year).map { |part| part.match_result }.last(5)
+    Participation.where(player: self).by_year(year).joins(:match).order(:date)
+                                     .pluck('participations.match_result').last(5)
   end
 
   # Opcional: Atualiza o slug se o nome mudar
