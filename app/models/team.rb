@@ -47,14 +47,14 @@ class Team < ApplicationRecord
 
   def get_top_scorers(current_year = Time.current.year)
     # TODO: players name em ordem alfabetica
-    players.participations_by_year(current_year).top_scorers(current_year).map do |player|
+    players.order(:name).participations_by_year(current_year).top_scorers(current_year).map do |player|
       { name: player[0], goals: player[1] }
     end
   end
 
   def least_conceded_goalkeepers(current_year = Time.current.year)
     # TODO: Implementar Rails cache para melhorar o desempenho
-    goalkeepers.participations_by_year(current_year)
+    goalkeepers.order(:name).participations_by_year(current_year)
                .sort_by { |player| player.goals_conceded[current_year.to_s] || 0 }
                .map { |player| { name: player.name, goals: player.goals_conceded[current_year.to_s] || 0 } }
   end
