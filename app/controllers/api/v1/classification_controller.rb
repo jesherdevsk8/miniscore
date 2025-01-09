@@ -15,7 +15,7 @@ module Api
         least_conceded_goalkeepers = team.least_conceded_goalkeepers(year)
 
         render json: {
-          data: players.sort_by { |hash| -hash[:statistics][:performance_percentage] },
+          data: players.sort_by { |hash| [ -hash[:statistics][:performance_percentage], hash[:name] ] },
           top_scorers: top_scorers, least_conceded_goalkeepers: least_conceded_goalkeepers
         }
       end
