@@ -8,8 +8,8 @@ class Player < ApplicationRecord
 
   belongs_to :team
 
-  has_many :participations
-  has_many :matches
+  has_many :participations, dependent: :destroy
+  has_many :matches, through: :participations
 
   validates :name, :number, :team, presence: true
   validates :position, presence: true
@@ -22,6 +22,12 @@ class Player < ApplicationRecord
 
   def total_goals(year = nil)
     participations.by_year(year).sum(:goals)
+  end
+
+  def total_match_goals(year = nil)
+    matches.by_year(year).pluck(:score).map do |score|
+      score.split('x').map(&:to_i).sum
+    end.sum
   end
 
   def self.top_scorers(year = nil, max_by: false, sort_by: true)
@@ -56,6 +62,15 @@ class Player < ApplicationRecord
     total_matches = total_matches(year)
     return 0 if total_matches.zero?
     (total_goals(year).to_f / total_matches)&.round(2)
+  end
+
+  def average_goals_conceded_per_match(year = nil)
+    return unless goalkeeper?
+
+    total_matches = total_matches(year)
+    total_match_goals = total_match_goals(year)
+
+    (total_match_goals.to_f / total_matches)&.round(2)
   end
 
   def percentage(year = nil)

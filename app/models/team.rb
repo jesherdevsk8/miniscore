@@ -8,9 +8,9 @@ class Team < ApplicationRecord
 
   belongs_to :user
 
-  has_many :participations
-  has_many :players
-  has_many :matches
+  has_many :participations, dependent: :destroy
+  has_many :players, dependent: :destroy
+  has_many :matches, dependent: :destroy
 
   validates :name, :slug, :user, presence: true
   validates :name, :slug, uniqueness: true
@@ -56,6 +56,7 @@ class Team < ApplicationRecord
     # TODO: Implementar Rails cache para melhorar o desempenho
     goalkeepers.order(:name).participations_by_year(current_year)
                .sort_by { |player| player.goals_conceded[current_year.to_s] || 0 }
-               .map { |player| { name: player.name, goals: player.goals_conceded[current_year.to_s] || 0 } }
+               .map { |player| { name: player.name, goals: player.goals_conceded[current_year.to_s] || 0,
+                                 average_goals_conceded_per_match: player.average_goals_conceded_per_match(current_year) || 0 } }
   end
 end
