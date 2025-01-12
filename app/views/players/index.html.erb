@@ -16,15 +16,20 @@
           </div>
         </div>
         <div class="card-body w-100 overflow-auto">
+          <div class="alert alert-info warning col-md-6 col-sm-12" role="alert">
+            As médias apresentadas nessa tela são referentes ao ano <%= @current_year %>.
+          </div>
+
           <div class="mt-2 mb-3 d-md-flex justify-content-md-left w-100">
             <%= form_tag players_path, method: :get, class: "d-flex align-items-center col-md-6 col-12" do %>
               <div class="input-group col-12">
                 <%= text_field_tag :slug, params[:slug], 
-                      class: "form-control", placeholder: "Filtrar jogador", 
+                      class: "form-control", placeholder: "Nome do jogador", 
                       onchange: "this.form.submit()" %>
                 <%= button_tag "<i class='bi bi-x-circle fs-5'></i>".html_safe,
                                class: "btn btn-secondary btn-sm",
-                               onclick: "this.form.slug.value = null; this.form.submit();" %>
+                               onclick: "this.form.slug.value = null; this.form.submit();",
+                               title: "Limpar filtro" %>
               </div>
             <% end %>
           </div>

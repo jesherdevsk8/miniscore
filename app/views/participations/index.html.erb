@@ -20,7 +20,7 @@
             <%= form_tag participations_path, method: :get, class: "d-flex flex-column align-items-center col-md-6  col-12" do %>
               <div class="input-group mb-2 col-12">
                 <%= text_field_tag :slug, params[:slug],
-                      class: "form-control", placeholder: "Filtrar jogador",
+                      class: "form-control", placeholder: "Nome do jogador",
                       onchange: "this.form.submit()" %>
                 <%= button_tag "<i class='bi bi-x-circle fs-5'></i>".html_safe,
                                class: "btn btn-secondary btn-sm",
@@ -32,7 +32,8 @@
                                 onchange: "this.form.submit()" %>
                 <%= button_tag "<i class='bi bi-x-circle fs-5'></i>".html_safe,
                                class: "btn btn-secondary btn-sm",
-                               onclick: "this.form.date.value = null; this.form.submit();" %>
+                               onclick: "this.form.date.value = null; this.form.submit();",
+                               title: "Limpar filtro" %>
               </div>
             <% end %>
           </div>
