@@ -24,12 +24,6 @@ class Player < ApplicationRecord
     participations.by_year(year).sum(:goals)
   end
 
-  def total_match_goals(year = nil)
-    matches.by_year(year).pluck(:score).map do |score|
-      score.split('x').map(&:to_i).sum
-    end.sum
-  end
-
   def self.top_scorers(year = nil, max_by: false, sort_by: true)
     # TODO: Otimizar esse metodo
     players = self.all.map do |player|
@@ -68,7 +62,8 @@ class Player < ApplicationRecord
     return unless goalkeeper?
 
     total_matches = total_matches(year)
-    total_match_goals = total_match_goals(year)
+    return 0 if total_matches.zero?
+    total_match_goals = goals_conceded[year.to_s]
 
     (total_match_goals.to_f / total_matches)&.round(2)
   end
