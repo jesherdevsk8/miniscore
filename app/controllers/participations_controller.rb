@@ -92,6 +92,7 @@ class ParticipationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def participation_params
-    params.require(:participation).permit(:player_id, :goals, :match_id, :match_result)
+    params.require(:participation)
+          .permit(:player_id, :goals, :match_id, :match_result, :non_goalkeeper_mode)
   end
 end
