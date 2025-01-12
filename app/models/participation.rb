@@ -12,6 +12,8 @@ class Participation < ApplicationRecord
 
   after_create :add_goals_conceded
 
+  scope :as_goalkeeper, -> { where.not(non_goalkeeper_mode: true) }
+
   scope :by_year, ->(year) {
     where(created_at: Time.new(year).beginning_of_year..Time.new(year).end_of_year) if year.present?
   }
@@ -31,7 +33,7 @@ class Participation < ApplicationRecord
   end
 
   def add_goals_conceded
-    return unless player.goalkeeper? && match.score.present?
+    return unless player.goalkeeper? && !non_goalkeeper_mode && match.score.present?
 
     scores = match.score.split('x').map(&:to_i)
 
