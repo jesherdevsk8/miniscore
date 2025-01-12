@@ -1,6 +1,6 @@
 <nav class="navbar bg-body-tertiary fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="<%= root_path %>">Mini Score</a>
+    <a class="navbar-brand" href="<%= root_path %>"><%= current_user.team.name %></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -15,7 +15,7 @@
       <ul class="nav flex-column">
         <li class="nav-item">
           <a class="nav-link" href="<%= root_path %>">
-            <i class="bi bi-person-fill"></i> Perfil
+            <i class="bi bi-person-fill"></i> Olá <%= current_user.email %>
           </a>
         </li>
         <li class="nav-item">

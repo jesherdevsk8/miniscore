@@ -8,8 +8,8 @@ class Player < ApplicationRecord
 
   belongs_to :team
 
-  has_many :participations
-  has_many :matches
+  has_many :participations, dependent: :destroy
+  has_many :matches, through: :participations
 
   validates :name, :number, :team, presence: true
   validates :position, presence: true
@@ -56,6 +56,16 @@ class Player < ApplicationRecord
     total_matches = total_matches(year)
     return 0 if total_matches.zero?
     (total_goals(year).to_f / total_matches)&.round(2)
+  end
+
+  def average_goals_conceded_per_match(year = nil)
+    return unless goalkeeper?
+
+    total_matches = total_matches(year)
+    return 0 if total_matches.zero?
+    total_match_goals = goals_conceded[year.to_s]
+
+    (total_match_goals.to_f / total_matches)&.round(2)
   end
 
   def percentage(year = nil)

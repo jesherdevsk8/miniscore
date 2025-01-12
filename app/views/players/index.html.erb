@@ -53,19 +53,19 @@
                 <% @players.sort_by(&:percentage).reverse.each do |player| %>
                   <tr>
                     <td><%= player.name %></td>
-                    <td class="text-center"><%= player.total_matches %></td>
-                    <td class="text-center"><%= player.percentage %>%</td>
-                    <td class="text-center"><%= player.vitorias %></td>
-                    <td class="text-center"><%= player.empates %></td>
-                    <td class="text-center"><%= player.derrotas %></td>
-                    <td class="text-center"><%= player.goals_per_matches %></td>
-                    <td class="text-center"><%= player.total_goals %></td>
+                    <td class="text-center"><%= player.total_matches(@current_year) %></td>
+                    <td class="text-center"><%= player.percentage(@current_year) %>%</td>
+                    <td class="text-center"><%= player.vitorias(@current_year) %></td>
+                    <td class="text-center"><%= player.empates(@current_year) %></td>
+                    <td class="text-center"><%= player.derrotas(@current_year) %></td>
+                    <td class="text-center"><%= player.goals_per_matches(@current_year) %></td>
+                    <td class="text-center"><%= player.total_goals(@current_year) %></td>
                     <td class="text-center d-flex gap-1 justify-content-center">
                       <%= link_to player, class: "btn btn-secondary btn-sm" do %>
                         <i class="bi bi-eye-fill"></i>
                       <% end %>
                       <%= link_to edit_player_path(player), class: "btn btn-primary btn-sm" do %>
-                        <i class="bi bi-pencil-square"></i>
+                        <i class="bi bi-pencil-fill"></i>
                       <% end %>
                     </td>
                   </tr>
