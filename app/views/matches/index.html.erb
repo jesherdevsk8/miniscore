@@ -20,7 +20,7 @@
               <%= link_to new_match_path, class: "btn btn-success btn-sm" do %>
                 <i class="bi bi-person-plus"></i>
               <% end %>
-              <%= button_tag "Novo jogo", class: "btn btn-outline-dark btn-sm", disabled: true %>
+              <%= button_tag "Nova partida", class: "btn btn-outline-dark btn-sm", disabled: true %>
             </div>
           </div>
         </div>
@@ -33,7 +33,8 @@
                                 onchange: "this.form.submit()" %>
                 <%= button_tag "<i class='bi bi-x-circle fs-5'></i>".html_safe,
                                class: "btn btn-secondary btn-sm",
-                               onclick: "this.form.date.value = null; this.form.submit();" %>
+                               onclick: "this.form.date.value = null; this.form.submit();",
+                               title: "Limpar filtro" %>
               </div>
             <% end %>
           </div>
