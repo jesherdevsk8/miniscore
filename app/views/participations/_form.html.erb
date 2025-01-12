@@ -31,6 +31,14 @@
               <% end %>
             </div>
           </div>
+          <div class="col-sm-12 mt-3 form-check form-switch">
+            <%# TODO: usar javascript para pegar o evento de quando o usuario selecionar um jogador
+                      que for goleiro %>
+            <% if @participation&.player&.goalkeeper? %>
+              <%= form.check_box :non_goalkeeper_mode, class: "form-check-input" %>
+              <%= form.label :non_goalkeeper_mode, "Goleiro jogou de linha?", class: "form-label" %>
+            <% end %>
+          </div>
         </fieldset>
       </div>
 

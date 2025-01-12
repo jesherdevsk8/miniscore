@@ -37,7 +37,8 @@ class Match < ApplicationRecord
     previous_score = scores_hash.first.split('x').map(&:to_i)
     new_score = scores_hash.last.split('x').map(&:to_i)
 
-    Participation.where(player: players.goalkeeper, match: self).each do |participation|
+    participations = Participation.where(player: players.goalkeeper, match: self).as_goalkeeper
+    participations.each do |participation|
       old_goals = case
       when participation.victory? then previous_score.min
       when participation.draw? then previous_score[0]

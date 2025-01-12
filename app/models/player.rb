@@ -37,7 +37,11 @@ class Player < ApplicationRecord
   end
 
   def total_matches(year = nil)
-    @total_matches ||= participations.by_year(year).size
+    if goalkeeper?
+      @total_matches ||= participations.by_year(year).as_goalkeeper.size
+    else
+      @total_matches ||= participations.by_year(year).size
+    end
   end
 
   def vitorias(year = nil)
