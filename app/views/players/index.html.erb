@@ -50,7 +50,8 @@
                 </tr>
               </thead>
               <tbody>
-                <% @players.sort_by(&:percentage).reverse.each do |player| %>
+                <% @players = @players.sort_by { |player| -player.percentage(@current_year) } %>
+                <% @players.each do |player| %>
                   <tr>
                     <td><%= player.name %></td>
                     <td class="text-center"><%= player.total_matches(@current_year) %></td>
