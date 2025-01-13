@@ -16,6 +16,12 @@
           </div>
         </div>
         <div class="card-body w-100 overflow-auto">
+          <div class="d-flex justify-content-start mb-3">
+            <a class="btn btn-warning btn-outline-dark" href="<%= "#{APP_HOST}/#{current_user.team.slug}/classifications" %>" target="_blank" rel="noopener noreferrer">
+              Classificação <i class="bi bi-box-arrow-up-right"></i>
+            </a>
+          </div>
+          
           <div class="alert alert-info warning col-md-6 col-sm-12" role="alert">
             As médias apresentadas nessa tela são referentes ao ano <%= @current_year %>.
           </div>

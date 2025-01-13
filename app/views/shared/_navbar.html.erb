@@ -1,6 +1,8 @@
 <nav class="navbar bg-body-tertiary fixed-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="<%= root_path %>"><%= current_user.team.name %></a>
+    <div class="d-flex justify-content-start align-items-center">
+      <%= link_to current_user.team.name, root_path, class: "navbar-brand me-3 ms-1" %>
+    </div>
     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
