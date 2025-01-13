@@ -11,17 +11,19 @@
 <div class="row gy-4 mt-2">
   <div class="col-lg-3 col-md-6 pe-md-4">
     <div class="card border-primary shadow-sm">
-      <div class="card-header bg-primary text-white">
-        <div class="d-flex align-items-center">
-          <div class="flex-shrink-0">
-            <i class="bi bi-person-fill fa-5x"></i>
-          </div>
-          <div class="flex-grow-1 text-end">
-            <div class="h2"><%= @total_players %></div>
-            <div>Total de jogadores!</div>
+      <a href="<%= players_path %>" class="stretched-link text-decoration-none">
+        <div class="card-header bg-primary text-white">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0">
+              <i class="bi bi-person-fill fa-5x"></i>
+            </div>
+            <div class="flex-grow-1 text-end">
+              <div class="h2"><%= @total_players %></div>
+              <div>Total de jogadores!</div>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 
@@ -60,17 +62,19 @@
 
   <div class="col-lg-3 col-md-6 pe-md-4">
     <div class="card border border-info shadow-sm">
-      <div class="card-header bg-info text-dark">
-        <div class="d-flex align-items-center">
-          <div class="flex-shrink-0">
-            <i class="bi bi-boxes fa-5x"></i>
-          </div>
-          <div class="flex-grow-1 text-end">
-            <div class="h2"><%= @total_matches %></div>
-            <div>Total de partidas!</div>
+      <a href="<%= matches_path %>" class="stretched-link text-decoration-none">
+        <div class="card-header bg-info text-dark">
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0">
+              <i class="bi bi-boxes fa-5x"></i>
+            </div>
+            <div class="flex-grow-1 text-end">
+              <div class="h2"><%= @total_matches %></div>
+              <div>Total de partidas!</div>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 
