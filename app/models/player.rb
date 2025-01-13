@@ -37,11 +37,7 @@ class Player < ApplicationRecord
   end
 
   def total_matches(year = nil)
-    if goalkeeper?
-      @total_matches ||= participations.by_year(year).as_goalkeeper.size
-    else
-      @total_matches ||= participations.by_year(year).size
-    end
+    @total_matches ||= participations.by_year(year).size
   end
 
   def vitorias(year = nil)
@@ -65,7 +61,7 @@ class Player < ApplicationRecord
   def average_goals_conceded_per_match(year = nil)
     return unless goalkeeper?
 
-    total_matches = total_matches(year)
+    total_matches = participations.by_year(year).as_goalkeeper.size
     return 0 if total_matches.zero?
     total_match_goals = goals_conceded[year.to_s]
 
