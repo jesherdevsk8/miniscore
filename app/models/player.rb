@@ -55,7 +55,7 @@ class Player < ApplicationRecord
   def goals_per_matches(year = nil)
     total_matches = total_matches(year)
     return 0 if total_matches.zero?
-    (total_goals(year).to_f / total_matches)&.round(2)
+    (total_goals(year).to_f / total_matches)&.round(1)
   end
 
   def average_goals_conceded_per_match(year = nil)
@@ -65,7 +65,7 @@ class Player < ApplicationRecord
     return 0 if total_matches.zero?
     total_match_goals = goals_conceded[year.to_s]
 
-    (total_match_goals.to_f / total_matches)&.round(2)
+    (total_match_goals.to_f / total_matches)&.round(1)
   end
 
   def percentage(year = nil)
