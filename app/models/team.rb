@@ -58,6 +58,6 @@ class Team < ApplicationRecord
                .sort_by { |player| player.goals_conceded[current_year.to_s] || 0 }
                .map { |player| { name: player.name, goals: player.goals_conceded[current_year.to_s] || 0,
                                  average_goals_conceded_per_match: player.average_goals_conceded_per_match(current_year) || 0,
-                                 total_matches: player.total_matches(current_year) || 0 } }
+                                 total_matches: player.total_goalkeeper_matches(current_year) || 0 } }
   end
 end
