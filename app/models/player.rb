@@ -65,7 +65,7 @@ class Player < ApplicationRecord
   def average_goals_conceded_per_match(year = nil)
     return unless goalkeeper?
 
-    total_matches = total_goalkeeper_matches
+    total_matches = total_goalkeeper_matches(year)
     return 0 if total_matches.zero?
     total_match_goals = goals_conceded[year.to_s]
 
