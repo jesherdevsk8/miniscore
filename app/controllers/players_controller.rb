@@ -7,8 +7,7 @@ class PlayersController < ApplicationController
 
   # GET /players or /players.json
   def index
-    @current_year = Time.current.year
-    players = load_players.participations_by_year(@current_year).by_slug(params[:slug])
+    players = load_players.by_slug(params[:slug])
     @pagy, @players = pagy(players)
   end
 
