@@ -41,7 +41,6 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 gem 'devise', '~> 4.9'
-gem 'dotenv', '~> 2.8'
 gem 'friendly_id', '~> 5.5'
 gem 'pagy', '~> 9.1'
 gem 'rack-cors', '~> 2.0'
@@ -57,6 +56,7 @@ group :development, :test do
   gem 'rubocop-rails-omakase', require: false
 
   gem 'pry-byebug'
+  gem 'dotenv-rails', '~> 3.1'
 end
 
 group :development do

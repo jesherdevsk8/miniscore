@@ -27,7 +27,7 @@ class Player < ApplicationRecord
   def self.top_scorers(year = nil, max_by: false, sort_by: true)
     # TODO: Otimizar esse metodo
     players = self.all.map do |player|
-      [ player.name, player.participations.by_year(year).sum(:goals) ]
+      [ player.name, player.total_goals(year), player.goals_per_matches(year) ]
     end
 
     players = players.sort_by { |_, goals| -goals } if sort_by
